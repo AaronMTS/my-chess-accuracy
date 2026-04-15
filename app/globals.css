@@ -2,10 +2,13 @@
 
 @theme {
   --color-primary: #88d982;
+  --color-primaryContainer: #003408;
+
   --color-onPrimary: #003909;
   --color-onPrimaryContainer: #54a353;
 
   --color-onSurface: #d6e4f9;
+  --color-onSurfaceLow: #c2c7ca;
   /* Secondary text color: slate-400 */
   /* Tertiary text color: slate-700 */
 
@@ -31,4 +34,8 @@
 
 .glassmorphism {
   @apply opacity-[0.6] backdrop-blur-[20px];
+}
+
+.activeSideLink {
+  @apply bg-linear-to-r from-primary to-onPrimaryContainer text-surface opacity-100;
 }

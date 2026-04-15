@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { manrope } from "./fonts";
-import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "MyChessAccuracy",
@@ -18,10 +17,7 @@ export default function RootLayout({
       lang="en"
       className={`${manrope.className} bg-surface text-onSurface antialiased`}
     >
-      <body>
-        <Navbar />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
