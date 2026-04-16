@@ -7,13 +7,14 @@ import { spaceGrotesk } from "@/app/fonts";
 
 import SidebarLink from "./SidebarLink";
 import Footer from "../Footer";
+import PrimaryButton from "../PrimaryButton";
 
 export default function Sidebar() {
   const pathName = usePathname();
 
   return (
     <aside
-      className={`flex flex-col gap-16 justify-between py-8 w-48 ${spaceGrotesk.className}`}
+      className={`shrink-0 flex flex-col gap-16 justify-between py-8 w-48 ${spaceGrotesk.className}`}
     >
       <div className="space-y-8">
         <div className="flex gap-2.5 items-center px-4.5">
@@ -35,9 +36,14 @@ export default function Sidebar() {
         </nav>
       </div>
       <div className="space-y-6">
-        <button className="mx-4.5 w-[stretch] px-4 py-2 bg-primaryContainer text-primary text-xs font-semibold tracking-wide uppercase rounded-md cursor-pointer">
+        <PrimaryButton
+          marginClasses="mx-4.5"
+          widthClass="w-[stretch]"
+          paddingClasses="px-4 py-2"
+          isUpperCase={true}
+        >
           New Analysis
-        </button>
+        </PrimaryButton>
         <Footer paddingClasses="pt-8" />
       </div>
     </aside>
