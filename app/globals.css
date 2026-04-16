@@ -30,6 +30,12 @@
   h2 {
     @apply text-3xl sm:text-4xl font-bold tracking-tighter;
   }
+  h3 {
+    @apply text-2xl sm:text-3xl font-semibold tracking-tight;
+  }
+  h4 {
+    @apply text-xl sm:text-2xl font-semibold tracking-tight;
+  }
 }
 
 .glassmorphism {
