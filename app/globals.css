@@ -24,6 +24,9 @@
 
   --color-tertiary: #dab9ff;
   --color-tertiaryContainer: #3f0078;
+
+  --color-error: #ffb4ab;
+  --color-errorContainer: #93000a;
 }
 
 @layer base {
