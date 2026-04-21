@@ -7,7 +7,7 @@ import { spaceGrotesk } from "@/app/fonts";
 
 import SidebarLink from "./SidebarLink";
 import Footer from "../Footer";
-import PrimaryButton from "../PrimaryButton";
+import PrimaryButton from "../buttons/PrimaryButton";
 
 export default function Sidebar() {
   const pathName = usePathname();
