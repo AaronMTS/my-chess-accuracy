@@ -5,10 +5,10 @@ type Props = {
 
 export default function HeaderDesc({ colorClass, children }: Props) {
   return (
-    <small
+    <p
       className={`${colorClass} text-xs font-semibold tracking-wide uppercase`}
     >
       {children}
-    </small>
+    </p>
   );
 }

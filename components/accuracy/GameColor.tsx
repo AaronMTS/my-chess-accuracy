@@ -1,6 +1,6 @@
 const COLOR_CLASSES: { white: string; black: string } = {
   white: "bg-onSurface border-surface",
-  black: "bg-black border-surfaceHighest",
+  black: "bg-black border-onSurface/40",
 };
 
 export default function GameColor({ color }: { color: "white" | "black" }) {

@@ -3,8 +3,7 @@ import { ChevronLeft, ChevronRight, ListFilter } from "lucide-react";
 import { spaceGrotesk } from "@/app/fonts";
 import { DummyGames } from "@/types/games";
 
-import Navbar from "@/components/Navbar";
-import OverallAccuracy from "@/components/accuracy/OverallAccuracy";
+import OverallAccuracy from "@/components/accuracy/OverallAccuracySection";
 import HeaderDesc from "@/components/HeaderDesc";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import GamesTableBody from "@/components/accuracy/GamesTableBody";
@@ -53,7 +52,7 @@ const DUMMY_GAMES: DummyGames[] = [
     rating: 2700,
   },
   {
-    id: 167026850531,
+    id: 167026850534,
     accuracy: 99,
     opponent: "Mangus",
     color: "black",
@@ -70,56 +69,53 @@ const DUMMY_COLUMNS_LENGTH = DUMMY_COLUMNS.length;
 
 export default function AccuracyPage() {
   return (
-    <div className="space-y-4 grow max-h-dvh bg-slate-950 overflow-auto">
-      <Navbar />
-      <main className="space-y-8 max-w-5xl mx-auto pt-2 pb-8 px-8">
-        <OverallAccuracy overallAccuracy={87.56} />
-        <section className="bg-surface rounded-lg overflow-hidden">
-          <header className="flex justify-between items-center p-6 bg-surfaceHigh/50">
-            <div>
-              <h4 className={spaceGrotesk.className}>Analyzed Games</h4>
-              <HeaderDesc colorClass="text-onSurfaceLow">
-                Full Session History
-              </HeaderDesc>
-            </div>
-            <SecondaryButton sizeClass="size-8" paddingClasses="p-2">
-              <ListFilter size={16} />
-            </SecondaryButton>
-          </header>
-          <table className="w-full table-fixed border-collapse text-left">
-            <thead>
-              <tr
-                className={`${spaceGrotesk.className} text-[10px] text-onSurfaceLow tracking-widest`}
-              >
-                {DUMMY_COLUMNS.map((column, index) => {
-                  const pxClasses = getCellPadding(index, DUMMY_COLUMNS_LENGTH);
+    <>
+      <OverallAccuracy overallAccuracy={87.56} />
+      <section className="bg-surface rounded-lg overflow-hidden">
+        <header className="flex justify-between items-center p-6 bg-surfaceHigh/50">
+          <div>
+            <h4 className={spaceGrotesk.className}>Analyzed Games</h4>
+            <HeaderDesc colorClass="text-onSurfaceLow">
+              Full Session History
+            </HeaderDesc>
+          </div>
+          <SecondaryButton sizeClass="size-8" paddingClasses="p-2">
+            <ListFilter size={16} />
+          </SecondaryButton>
+        </header>
+        <table className="w-full table-fixed border-collapse text-left">
+          <thead>
+            <tr
+              className={`${spaceGrotesk.className} text-[10px] text-onSurfaceLow tracking-widest`}
+            >
+              {DUMMY_COLUMNS.map((column, index) => {
+                const pxClasses = getCellPadding(index, DUMMY_COLUMNS_LENGTH);
 
-                  return (
-                    <th
-                      key={column}
-                      className={`${column === "opponent" ? "w-1/5" : column === "date" ? "w-1/7" : "w-auto"} ${pxClasses} pt-5 pb-2.5 uppercase`}
-                    >
-                      {column}
-                    </th>
-                  );
-                })}
-              </tr>
-            </thead>
-            <GamesTableBody games={DUMMY_GAMES} />
-          </table>
-          <nav className="flex justify-between items-center bg-surfaceHigh/50 p-6">
-            <span className="text-xs">Showing 5 of 1,248 games</span>
-            <span className="space-x-2">
-              <TableNavButton disabled>
-                <ChevronLeft size={20} />
-              </TableNavButton>
-              <TableNavButton>
-                <ChevronRight size={20} />
-              </TableNavButton>
-            </span>
-          </nav>
-        </section>
-      </main>
-    </div>
+                return (
+                  <th
+                    key={column}
+                    className={`${column === "opponent" ? "w-1/5" : column === "date" ? "w-1/7" : "w-auto"} ${pxClasses} pt-5 pb-2.5 uppercase`}
+                  >
+                    {column}
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+          <GamesTableBody games={DUMMY_GAMES} />
+        </table>
+        <nav className="flex justify-between items-center bg-surfaceHigh/50 p-6">
+          <span className="text-xs">Showing 5 of 1,248 games</span>
+          <span className="space-x-2">
+            <TableNavButton disabled>
+              <ChevronLeft size={20} />
+            </TableNavButton>
+            <TableNavButton>
+              <ChevronRight size={20} />
+            </TableNavButton>
+          </span>
+        </nav>
+      </section>
+    </>
   );
 }

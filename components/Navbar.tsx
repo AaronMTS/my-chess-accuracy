@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <nav className="sticky top-0 z-10 bg-slate-950 py-3 px-6">
+    <nav className="sticky top-0 z-20 bg-slate-950 py-3 px-6">
       <Link
         href="/"
         className={`flex gap-2 items-center ${spaceGrotesk.className} text-lg *:leading-6 font-semibold text-primary`}
