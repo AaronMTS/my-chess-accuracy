@@ -13,7 +13,7 @@ export default function OverallAccuracy() {
           Based on 1,248 games analyzed
         </HeaderDesc>
       </header>
-      <div className="relative size-40">
+      <div className="relative size-56">
         <svg
           className="size-full -rotate-90"
           viewBox="0 0 480 480"
@@ -38,11 +38,11 @@ export default function OverallAccuracy() {
             strokeLinecap="round"
           />
         </svg>
-        <h2
+        <h1
           className={`absolute top-1/2 left-1/2 -translate-1/2 ${spaceGrotesk.className} tracking-normal`}
         >
           84.5%
-        </h2>
+        </h1>
       </div>
     </section>
   );

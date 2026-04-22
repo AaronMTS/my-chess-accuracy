@@ -9,7 +9,7 @@ export default function GameColor({ color }: { color: "white" | "black" }) {
       <span
         className={`shrink-0 inline-block size-2.5 border ${COLOR_CLASSES[color]} rounded-full`}
       ></span>
-      <span className="text-onSurfaceLow text-[9px] font-bold uppercase tracking-wide">
+      <span className="text-onSurfaceLow text-[10px] font-bold uppercase tracking-wide">
         {color}
       </span>
     </div>

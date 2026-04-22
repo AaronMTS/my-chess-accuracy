@@ -10,7 +10,7 @@ export default function GameMode({ mode }: { mode: string }) {
   return (
     <div className="flex gap-1.5 items-center text-onSurfaceLow">
       {Object.hasOwn(MODE_ICONS, mode) && MODE_ICONS[mode]}
-      <span className="text-[9px] font-bold uppercase tracking-wide">
+      <span className="text-[10px] font-bold uppercase tracking-wide">
         {mode}
       </span>
     </div>
