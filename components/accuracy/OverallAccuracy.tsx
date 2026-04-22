@@ -1,7 +1,11 @@
 import { spaceGrotesk } from "@/app/fonts";
 import HeaderDesc from "../HeaderDesc";
 
-export default function OverallAccuracy() {
+export default function OverallAccuracy({
+  overallAccuracy,
+}: {
+  overallAccuracy: number;
+}) {
   return (
     <section className="flex gap-12 justify-between items-center p-6 bg-surface rounded-lg">
       <header>
@@ -41,7 +45,7 @@ export default function OverallAccuracy() {
         <h1
           className={`absolute top-1/2 left-1/2 -translate-1/2 ${spaceGrotesk.className} tracking-normal`}
         >
-          84.5%
+          {overallAccuracy.toFixed(1)}%
         </h1>
       </div>
     </section>
