@@ -17,7 +17,7 @@ export default function RootLayout({
       lang="en"
       className={`${manrope.className} bg-surface text-onSurface antialiased`}
     >
-      <body>{children}</body>
+      <body className="min-h-dvh">{children}</body>
     </html>
   );
 }

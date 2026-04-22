@@ -2,13 +2,13 @@ import { spaceGrotesk } from "../fonts";
 import { Zap, UserRound } from "lucide-react";
 
 import Navbar from "@/components/Navbar";
-import CtaButton from "@/components/CtaButton";
+import CtaButton from "@/components/buttons/CtaButton";
 
 export default function AnalyzePage() {
   return (
     <>
       <Navbar />
-      <section className="space-y-6 p-8 mx-auto max-w-lg text-center">
+      <section className="mt-3 space-y-6 p-8 mx-auto max-w-lg text-center md:mt-6">
         <div className="space-y-3">
           <h2 className={spaceGrotesk.className}>Initialize Analysis</h2>
           <p className="text-slate-400 text-sm">
