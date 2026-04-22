@@ -30,14 +30,20 @@
 }
 
 @layer base {
+  h1 {
+    @apply text-4xl sm:text-5xl font-bold tracking-tight;
+  }
   h2 {
-    @apply text-3xl sm:text-4xl font-bold tracking-tighter;
+    @apply text-3xl sm:text-4xl font-bold tracking-tight;
   }
   h3 {
     @apply text-2xl sm:text-3xl font-semibold tracking-tight;
   }
   h4 {
     @apply text-xl sm:text-2xl font-semibold tracking-tight;
+  }
+  h5 {
+    @apply text-lg sm:text-xl font-semibold tracking-tight;
   }
 }
 
