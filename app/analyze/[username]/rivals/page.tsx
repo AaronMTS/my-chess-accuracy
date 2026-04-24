@@ -1,14 +1,13 @@
-import Image from "next/image";
-
+import { RivalDetails } from "@/types/rivals";
 import { spaceGrotesk } from "@/app/fonts";
-import { Medal, Star, Swords, Trophy } from "lucide-react";
-import WinOrLossCard from "@/components/rivals/WinOrLossCard";
+import { Swords } from "lucide-react";
 import HeaderEyebrow from "@/components/HeaderEyebrow";
+import RivalSection from "@/components/rivals/RivalSection";
 
-const DUMMY_TOP_DEFEATED = [
+const DUMMY_MOST_DEFEATED: RivalDetails[] = [
   {
     id: 3894387564,
-    image:
+    imageUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuC_OVKPJhu7LHezNYuuEa6Gsef_Vo7fgV8qz4p6KUXYUB_3A45Znbsvs76Nqv8ejTUp0s27OSmz_mXVIP7PF3Nfo1hu5pEJxmtIT8alGz0QVI0g_SIoMVW_XvfGisGpZHFdyxHddoOnNbbHigbEsoy8nr_AOXhIfau3H92tYzAGFaRAsqv-cczcnTgKHmBT6STOCXcKsG6NUs9HTI3hEE-ALVbPPi-A1UhDzyr3WoH9YRjuLqVR40u-6l83EaT-iecOdIATiCzajyc",
     username: "Alexei_88",
     rating: 2304,
@@ -18,7 +17,7 @@ const DUMMY_TOP_DEFEATED = [
   },
   {
     id: 3894387534,
-    image:
+    imageUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuC_OVKPJhu7LHezNYuuEa6Gsef_Vo7fgV8qz4p6KUXYUB_3A45Znbsvs76Nqv8ejTUp0s27OSmz_mXVIP7PF3Nfo1hu5pEJxmtIT8alGz0QVI0g_SIoMVW_XvfGisGpZHFdyxHddoOnNbbHigbEsoy8nr_AOXhIfau3H92tYzAGFaRAsqv-cczcnTgKHmBT6STOCXcKsG6NUs9HTI3hEE-ALVbPPi-A1UhDzyr3WoH9YRjuLqVR40u-6l83EaT-iecOdIATiCzajyc",
     username: "GM_V",
     rating: 2504,
@@ -28,7 +27,7 @@ const DUMMY_TOP_DEFEATED = [
   },
   {
     id: 3894387064,
-    image:
+    imageUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuC_OVKPJhu7LHezNYuuEa6Gsef_Vo7fgV8qz4p6KUXYUB_3A45Znbsvs76Nqv8ejTUp0s27OSmz_mXVIP7PF3Nfo1hu5pEJxmtIT8alGz0QVI0g_SIoMVW_XvfGisGpZHFdyxHddoOnNbbHigbEsoy8nr_AOXhIfau3H92tYzAGFaRAsqv-cczcnTgKHmBT6STOCXcKsG6NUs9HTI3hEE-ALVbPPi-A1UhDzyr3WoH9YRjuLqVR40u-6l83EaT-iecOdIATiCzajyc",
     username: "TheFishermannnnnnnn",
     rating: 2091,
@@ -38,10 +37,37 @@ const DUMMY_TOP_DEFEATED = [
   },
 ];
 
-const MOST_DEFEATED_ICONS = [
-  <Trophy key="topDefeated" className="fill-primary/30 stroke-primary" />,
-  <Medal key="2ndMostDefeated" className="fill-primary/30 stroke-primary" />,
-  <Star key="3rdMostDefeated" className="fill-primary/30 stroke-primary" />,
+const DUMMY_BIGGEST_NEMESES: RivalDetails[] = [
+  {
+    id: 3894387564,
+    imageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuC_OVKPJhu7LHezNYuuEa6Gsef_Vo7fgV8qz4p6KUXYUB_3A45Znbsvs76Nqv8ejTUp0s27OSmz_mXVIP7PF3Nfo1hu5pEJxmtIT8alGz0QVI0g_SIoMVW_XvfGisGpZHFdyxHddoOnNbbHigbEsoy8nr_AOXhIfau3H92tYzAGFaRAsqv-cczcnTgKHmBT6STOCXcKsG6NUs9HTI3hEE-ALVbPPi-A1UhDzyr3WoH9YRjuLqVR40u-6l83EaT-iecOdIATiCzajyc",
+    username: "DeepBlue_Clone",
+    rating: 2359,
+    wins: 3,
+    draw: 0,
+    loss: 17,
+  },
+  {
+    id: 3894387534,
+    imageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuC_OVKPJhu7LHezNYuuEa6Gsef_Vo7fgV8qz4p6KUXYUB_3A45Znbsvs76Nqv8ejTUp0s27OSmz_mXVIP7PF3Nfo1hu5pEJxmtIT8alGz0QVI0g_SIoMVW_XvfGisGpZHFdyxHddoOnNbbHigbEsoy8nr_AOXhIfau3H92tYzAGFaRAsqv-cczcnTgKHmBT6STOCXcKsG6NUs9HTI3hEE-ALVbPPi-A1UhDzyr3WoH9YRjuLqVR40u-6l83EaT-iecOdIATiCzajyc",
+    username: "Kasparov_ds",
+    rating: 2650,
+    wins: 5,
+    draw: 0,
+    loss: 16,
+  },
+  {
+    id: 3894387064,
+    imageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuC_OVKPJhu7LHezNYuuEa6Gsef_Vo7fgV8qz4p6KUXYUB_3A45Znbsvs76Nqv8ejTUp0s27OSmz_mXVIP7PF3Nfo1hu5pEJxmtIT8alGz0QVI0g_SIoMVW_XvfGisGpZHFdyxHddoOnNbbHigbEsoy8nr_AOXhIfau3H92tYzAGFaRAsqv-cczcnTgKHmBT6STOCXcKsG6NUs9HTI3hEE-ALVbPPi-A1UhDzyr3WoH9YRjuLqVR40u-6l83EaT-iecOdIATiCzajyc",
+    username: "Matrix_Rebornasddd",
+    rating: 2991,
+    wins: 8,
+    draw: 0,
+    loss: 17,
+  },
 ];
 
 export default function RivalsPage() {
@@ -63,89 +89,20 @@ export default function RivalsPage() {
           <Swords className="size-42 fill-surfaceBright stroke-surfaceBright opacity-70" />
         </div>
       </section>
-      <section className="space-y-4">
-        <header>
-          <h4 className={`${spaceGrotesk.className} text-primary`}>
-            Most Defeated
-          </h4>
-          <p className="text-sm">
-            Opponents who struggle against your tactical patterns
-          </p>
-        </header>
-        <hr className="border-surfaceHigh" />
-        <div className="grid gap-4 grid-cols-3">
-          {DUMMY_TOP_DEFEATED.map((rival, index) => {
-            const winPercentage = Math.round(
-              (rival.wins / (rival.wins + rival.draw + rival.loss)) * 100,
-            );
-
-            return (
-              <div
-                key={rival.id}
-                className="space-y-4.5 bg-surfaceHigh p-6 rounded-2xl"
-              >
-                <div className="flex gap-3">
-                  <span className="shrink-0 inline-block ring-2 ring-primary/20 rounded-xl overflow-hidden">
-                    <Image
-                      src={rival.image}
-                      height={64}
-                      width={64}
-                      alt={`Profile picture of ${rival.username}`}
-                    />
-                  </span>
-                  <span className="grow self-center-safe overflow-hidden">
-                    <h5
-                      className={`${spaceGrotesk.className} overflow-hidden text-ellipsis`}
-                    >
-                      {rival.username}
-                    </h5>
-                    <small className="bg-surfaceLowest px-2 py-1 text-xs font-mono tracking-wide rounded-sm">
-                      {rival.rating} ELO
-                    </small>
-                  </span>
-                  <span className="ps-4">{MOST_DEFEATED_ICONS[index]}</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <small className="text-xs text-onSurfaceLow font-semibold tracking-wide">
-                      WIN RATE
-                    </small>
-                    <small>{winPercentage}%</small>
-                  </div>
-                  <div className="rounded-full overflow-hidden">
-                    <svg viewBox="0 0 100 3">
-                      <line
-                        x1="0"
-                        y1="1.5"
-                        x2="100"
-                        y2="1.5"
-                        className="stroke-surfaceLowest"
-                        strokeWidth={3}
-                        strokeLinecap="round"
-                      />
-                      <line
-                        x1="0"
-                        y1="1.5"
-                        x2="100"
-                        y2="1.5"
-                        className="stroke-primary"
-                        strokeWidth={3}
-                        strokeDasharray={100}
-                        strokeDashoffset={100 - winPercentage}
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div className="grid gap-4.5 grid-cols-2">
-                  <WinOrLossCard result="win" amount={rival.wins} />
-                  <WinOrLossCard result="loss" amount={rival.loss} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      <RivalSection
+        title="Most Defeated"
+        titleColor="text-primary"
+        description="Opponents who struggle against your tactical patterns"
+        rivals={DUMMY_MOST_DEFEATED}
+        type="MOST_DEFEATED"
+      />
+      <RivalSection
+        title="Biggest Nemeses"
+        titleColor="text-tertiary"
+        description="Rivals whose style currently counters your main openings"
+        rivals={DUMMY_BIGGEST_NEMESES}
+        type="BIGGEST_NEMESES"
+      />
     </>
   );
 }
