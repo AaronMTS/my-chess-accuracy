@@ -49,7 +49,7 @@ export default function GamesTableBody({ games }: { games: DummyGames[] }) {
               return (
                 <td
                   key={value[1]}
-                  className={`${gameIndex < games.length - 1 ? "py-5" : "pt-5 pb-7.5"} ${pxClasses} ${additionalClasses}`}
+                  className={`${value[0] === "accuracy" ? "sticky left-0 bg-surface" : ""} ${gameIndex < games.length - 1 ? "py-5" : "pt-5 pb-7.5"} ${pxClasses} ${additionalClasses}`}
                 >
                   {content && content}
                   {!content && value[1]}

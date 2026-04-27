@@ -1,5 +1,6 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
+import SidebarContextProvider from "@/store/sidebar-context";
 
 export default function SidebarLayout({
   children,
@@ -7,14 +8,16 @@ export default function SidebarLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-dvh">
-      <Sidebar />
-      <div className="space-y-4 grow max-h-dvh bg-slate-950 overflow-auto">
-        <Navbar />
-        <main className="space-y-8 max-w-5xl mx-auto pt-2 pb-8 px-8">
-          {children}
-        </main>
+    <SidebarContextProvider>
+      <div className="relative flex min-h-dvh">
+        <Sidebar />
+        <div className="grow flex flex-col gap-4 max-h-dvh bg-slate-950 overflow-auto">
+          <Navbar hasSidebarBtn={true} />
+          <main className="space-y-8 grow w-full max-w-5xl mx-auto pt-2 pb-8 px-8">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarContextProvider>
   );
 }

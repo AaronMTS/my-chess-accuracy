@@ -1,13 +1,14 @@
 import { spaceGrotesk } from "../fonts";
 import { Zap, UserRound } from "lucide-react";
 
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import CtaButton from "@/components/buttons/CtaButton";
+import { analyzeGames } from "@/lib/actions";
 
 export default function AnalyzePage() {
   return (
     <>
-      <Navbar />
+      <Navbar hasSidebarBtn={false} />
       <section className="mt-3 space-y-6 p-8 mx-auto max-w-lg text-center md:mt-6">
         <div className="space-y-3">
           <h2 className={spaceGrotesk.className}>Initialize Analysis</h2>
@@ -17,7 +18,7 @@ export default function AnalyzePage() {
           </p>
         </div>
         <form
-          action=""
+          action={analyzeGames}
           className="bg-surfaceLow p-6 flex flex-col items-start gap-3 rounded-xl"
         >
           <label

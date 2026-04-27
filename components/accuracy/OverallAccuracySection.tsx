@@ -2,7 +2,7 @@ import { spaceGrotesk } from "@/app/fonts";
 import HeaderDesc from "../HeaderDesc";
 import HeaderEyebrow from "../HeaderEyebrow";
 
-export default function OverallAccuracy({
+export default function OverallAccuracySection({
   overallAccuracy,
 }: {
   overallAccuracy: number;

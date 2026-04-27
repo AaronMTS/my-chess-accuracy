@@ -1,5 +1,6 @@
 "use client";
 
+import { LG_WIDTH, MD_WIDTH } from "@/util/screen";
 import { LoaderCircle } from "lucide-react";
 import { ButtonHTMLAttributes, useEffect, useState } from "react";
 
@@ -8,7 +9,6 @@ type Content = string | React.ReactNode;
 type ResponsiveContent = {
   default: Content;
   md?: Content;
-  lg?: Content;
 };
 
 type Props = {
@@ -19,8 +19,6 @@ type Props = {
   responsiveContent?: ResponsiveContent;
   children?: React.ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
-
-const LG_WIDTH = 1024;
 
 export default function PrimaryButton({
   marginClasses = "",
@@ -37,9 +35,9 @@ export default function PrimaryButton({
 
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth >= LG_WIDTH) {
-        if (currentContent !== responsiveContent?.lg) {
-          setCurrentContent(responsiveContent?.lg);
+      if (window.innerWidth >= MD_WIDTH && window.innerWidth < LG_WIDTH) {
+        if (currentContent !== responsiveContent?.md) {
+          setCurrentContent(responsiveContent?.md);
         }
         return;
       }
