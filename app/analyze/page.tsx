@@ -4,12 +4,13 @@ import { Zap, UserRound } from "lucide-react";
 import Navbar from "@/components/navbar/Navbar";
 import CtaButton from "@/components/buttons/CtaButton";
 import { analyzeGames } from "@/lib/actions";
+import Footer from "@/components/Footer";
 
 export default function AnalyzePage() {
   return (
-    <>
+    <main className="flex flex-col gap-3 h-dvh">
       <Navbar hasSidebarBtn={false} />
-      <section className="mt-3 space-y-6 p-8 mx-auto max-w-lg text-center md:mt-6">
+      <section className="space-y-6 grow p-8 mx-auto max-w-lg text-center md:mt-6">
         <div className="space-y-3">
           <h2 className={spaceGrotesk.className}>Initialize Analysis</h2>
           <p className="text-slate-400 text-sm">
@@ -52,6 +53,7 @@ export default function AnalyzePage() {
           </CtaButton>
         </form>
       </section>
-    </>
+      <Footer paddingClasses="px-8 py-4" />
+    </main>
   );
 }

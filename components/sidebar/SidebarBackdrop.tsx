@@ -1,5 +1,6 @@
 import { useSidebar } from "@/store/sidebar-context";
 import Backdrop from "../Backdrop";
+import { AnimatePresence } from "motion/react";
 
 export default function SidebarBackdrop() {
   const { isShown, toggle } = useSidebar();
@@ -8,5 +9,11 @@ export default function SidebarBackdrop() {
     toggle(false);
   }
 
-  return isShown && <Backdrop handleClick={closeSidebar} />;
+  return (
+    <AnimatePresence>
+      {isShown && (
+        <Backdrop handleClick={closeSidebar} animationDuration={0.3} />
+      )}
+    </AnimatePresence>
+  );
 }

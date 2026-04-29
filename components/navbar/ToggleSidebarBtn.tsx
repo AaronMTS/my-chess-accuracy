@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { motion } from "motion/react";
+
 import { useSidebar } from "@/store/sidebar-context";
 import { MD_WIDTH } from "@/util/screen";
 import { Menu } from "lucide-react";
-import { useEffect, useRef } from "react";
 
 export default function ToggleSidebarBtn() {
   const { toggle } = useSidebar();
@@ -23,12 +25,22 @@ export default function ToggleSidebarBtn() {
     return () => window.removeEventListener("resize", handleResize);
   }, [toggle]);
 
+  function handleToggleSidebar() {
+    const toggleSidebar = toggleRef.current;
+
+    if (toggleSidebar) {
+      toggleSidebar();
+    }
+  }
+
   return (
-    <button
-      onClick={() => toggleRef.current?.()}
-      className="absolute top-1/2 -translate-y-1/2 left-0 text-primary cursor-pointer"
+    <motion.button
+      type="button"
+      whileTap={{ scale: 0.9 }}
+      onClick={handleToggleSidebar}
+      className="absolute top-1/2 -translate-y-1/2 left-0 z-30 text-primary cursor-pointer md:hidden"
     >
-      <Menu />
-    </button>
+      <Menu size={28} />
+    </motion.button>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 type SidebarContextType = {
   isShown: boolean;
@@ -16,9 +16,13 @@ export default function SidebarContextProvider({
 }) {
   const [isShown, setIsShown] = useState(false);
 
-  function toggle(newValue: boolean) {
+  const toggle = useCallback((newValue: boolean) => {
     setIsShown((prevValue) => (prevValue !== newValue ? newValue : prevValue));
-  }
+  }, []);
+
+  // function toggle(newValue: boolean) {
+  //   setIsShown((prevValue) => (prevValue !== newValue ? newValue : prevValue));
+  // }
 
   const ctxValue = { isShown, toggle };
 

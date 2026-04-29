@@ -61,16 +61,41 @@ const DUMMY_GAMES: DummyGames[] = [
     moves: 26,
     rating: 2812,
   },
+  {
+    id: 167020850534,
+    accuracy: 91,
+    opponent: "Mang2us",
+    color: "black",
+    mode: "rapid",
+    date: "Oct. 23, 2023",
+    moves: 55,
+    rating: 2811,
+  },
+  {
+    id: 167020850034,
+    accuracy: 65,
+    opponent: "Manga2aus",
+    color: "black",
+    mode: "bullet",
+    date: "Oct. 20, 2023",
+    moves: 51,
+    rating: 2793,
+  },
 ];
 
 const DUMMY_COLUMNS = Object.keys(DUMMY_GAMES[0]);
 DUMMY_COLUMNS.shift();
 const DUMMY_COLUMNS_LENGTH = DUMMY_COLUMNS.length;
+const averageAccuracy =
+  DUMMY_GAMES.reduce(
+    (accumulator, current) => accumulator + current.accuracy,
+    0,
+  ) / DUMMY_GAMES.length;
 
 export default function AccuracyPage() {
   return (
     <>
-      <OverallAccuracySection overallAccuracy={87.56} />
+      <OverallAccuracySection overallAccuracy={averageAccuracy} />
       <section className="bg-surface rounded-lg overflow-hidden">
         <header className="flex justify-between items-center p-6 bg-surfaceHigh/50">
           <div>
