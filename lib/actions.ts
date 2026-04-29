@@ -1,9 +1,9 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
 export async function analyzeGames(formData: FormData) {
   const username = formData.get("username");
 
-  redirect(`./${username}/accuracy`);
+  redirect(`./${username}/accuracy`, RedirectType.push);
 }
