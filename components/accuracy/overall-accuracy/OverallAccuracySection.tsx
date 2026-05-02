@@ -1,6 +1,6 @@
 import { spaceGrotesk } from "@/app/fonts";
-import HeaderDesc from "../HeaderDesc";
-import HeaderEyebrow from "../HeaderEyebrow";
+import HeaderDesc from "../../HeaderDesc";
+import HeaderEyebrow from "../../HeaderEyebrow";
 import OverallAccuracyIndicator from "./OverallAccuracyIndicator";
 import OverallAccuracy from "./OverallAccuracy";
 
