@@ -7,12 +7,12 @@ import ToggleSidebarBtn from "./ToggleSidebarBtn";
 
 export default function Navbar({ hasSidebarBtn }: { hasSidebarBtn: boolean }) {
   return (
-    <nav className="sticky top-0 z-20 shrink-0 bg-slate-950 py-3 px-8">
-      <div className="relative">
+    <nav className="sticky top-0 z-20 shrink-0 bg-slate-950">
+      <div className="relative max-w-5xl py-3 px-8 lg:mx-auto">
         {hasSidebarBtn && <ToggleSidebarBtn />}
         <Link
           href="/"
-          className={`w-fit mx-auto flex gap-2 items-center ${spaceGrotesk.className} text-lg *:leading-6 font-semibold text-primary md:ms-0`}
+          className={`w-fit ${hasSidebarBtn ? "mx-auto md:ms-0" : ""} flex gap-2 items-center ${spaceGrotesk.className} text-lg *:leading-6 font-semibold text-primary`}
         >
           <span className="relative -top-0.5 size-6">
             <Image

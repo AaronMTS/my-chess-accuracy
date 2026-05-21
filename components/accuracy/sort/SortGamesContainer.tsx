@@ -21,6 +21,7 @@ export default function SortGamesContainer() {
         onClick={() => handleToggleSortGames()}
         sizeClass="size-8"
         paddingClasses="p-2"
+        textSizeClass="text-xs"
       >
         <ListFilter size={16} />
       </SecondaryButton>

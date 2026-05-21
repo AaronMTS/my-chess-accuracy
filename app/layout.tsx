@@ -17,7 +17,7 @@ export default function RootLayout({
       lang="en"
       className={`${manrope.className} bg-surface text-onSurface antialiased`}
     >
-      <body className="min-h-dvh">
+      <body className="min-h-dvh flex flex-col">
         <div id="modal_root"></div>
         {children}
       </body>

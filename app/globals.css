@@ -55,6 +55,6 @@
   @apply bg-linear-to-r from-primary to-onPrimaryContainer text-surface opacity-100;
 }
 
-.shadowRight {
-  box-shadow: 0 1px 8px var(--color-surfaceHigh);
+.shadowBottom {
+  box-shadow: 0 8px 12px;
 }

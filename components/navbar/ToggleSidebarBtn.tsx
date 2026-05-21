@@ -38,7 +38,7 @@ export default function ToggleSidebarBtn() {
       type="button"
       whileTap={{ scale: 0.9 }}
       onClick={handleToggleSidebar}
-      className="absolute top-1/2 -translate-y-1/2 left-0 z-30 text-primary cursor-pointer md:hidden"
+      className="absolute top-1/2 -translate-y-1/2 left-8 z-30 text-primary cursor-pointer md:hidden"
     >
       <Menu size={28} />
     </motion.button>
