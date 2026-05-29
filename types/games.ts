@@ -1,4 +1,4 @@
-export type DummyGames = {
+export type Games = {
   id: number;
   accuracy: number;
   opponent: string;
@@ -7,8 +7,9 @@ export type DummyGames = {
   date: string;
   moves: number;
   rating: number;
+  result: "win" | "loss";
 };
 
-export type DummyGamesOptionalId = Omit<DummyGames, "id"> & {
+export type GamesOptionalId = Omit<Games, "id"> & {
   id?: number;
 };

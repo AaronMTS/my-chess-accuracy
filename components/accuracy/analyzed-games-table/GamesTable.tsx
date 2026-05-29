@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import { DummyGames } from "@/types/games";
+import { Games } from "@/types/games";
 import {
   ColumnDef,
   useReactTable,
@@ -14,7 +14,6 @@ import {
   getSortedRowModel,
 } from "@tanstack/react-table";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DUMMY_GAMES } from "@/util/dummy-games";
 import { getCellPadding } from "@/util/table";
 
 import GameAccuracy from "./GameAccuracy";
@@ -28,9 +27,9 @@ import GamesTableHeader from "./GamesTableHeader";
 
 const DATE_ADDITIONAL_CLASSES = "text-xs text-onSurfaceLow font-semibold";
 
-export default function GamesTable() {
+export default function GamesTable({ games }: { games: Games[] }) {
   "use no memo";
-  const columns = useMemo<ColumnDef<DummyGames>[]>(
+  const columns = useMemo<ColumnDef<Games>[]>(
     () => [
       {
         accessorKey: "accuracy",
@@ -65,7 +64,12 @@ export default function GamesTable() {
       {
         accessorKey: "rating",
         header: "Rating",
-        cell: (info) => <GameRating rating={info.getValue<number>()} />,
+        cell: (info) => (
+          <GameRating
+            rating={info.getValue<number>()}
+            result={info.row.original.result}
+          />
+        ),
         enableSorting: true,
       },
     ],
@@ -74,13 +78,13 @@ export default function GamesTable() {
 
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 5,
+    pageSize: 10,
   });
 
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const gamesTable = useReactTable({
-    data: DUMMY_GAMES,
+    data: games,
     columns,
     state: { pagination, sorting },
     onPaginationChange: setPagination,

@@ -1,25 +1,38 @@
-import { spaceGrotesk } from "../fonts";
+"use client";
+
+import { useMemo, useActionState } from "react";
 import { Zap, UserRound } from "lucide-react";
 
 import Navbar from "@/components/navbar/Navbar";
 import CtaButton from "@/components/buttons/CtaButton";
-import { analyzeGames } from "@/lib/actions";
 import Footer from "@/components/Footer";
+import { handleAnalyzeGames } from "@/lib/actions";
+import AnalysisLoader from "@/components/AnalysisLoader";
 
 export default function AnalyzePage() {
+  const requestId = useMemo(() => crypto.randomUUID(), []);
+
+  const analyzeAction = handleAnalyzeGames.bind(null, requestId);
+  const [analyzeFormState, analyzeFormAction, pending] = useActionState(
+    analyzeAction,
+    {
+      errorMessage: null,
+    },
+  );
+
   return (
     <main className="flex flex-col gap-3 h-dvh">
       <Navbar hasSidebarBtn={false} />
       <section className="space-y-6 grow p-8 mx-auto max-w-lg text-center md:mt-6">
         <div className="space-y-3">
-          <h2 className={spaceGrotesk.className}>Initialize Analysis</h2>
+          <h2 className="font-heading">Initialize Analysis</h2>
           <p className="text-slate-400 text-sm">
             Enter a chess.com handle for a deep-dive <br />
             tactical breakdown of recent performance.
           </p>
         </div>
         <form
-          action={analyzeGames}
+          action={analyzeFormAction}
           className="bg-surfaceLow p-6 flex flex-col items-start gap-3 rounded-xl"
         >
           <label
@@ -37,21 +50,26 @@ export default function AnalyzePage() {
               name="username"
               id="username"
               placeholder="e.g. hikaru"
-              className={`grow pr-5 py-3 ${spaceGrotesk.className} font-medium outline-0 placeholder:text-slate-700`}
+              className={`grow pr-5 py-3 font-heading font-medium outline-0 placeholder:text-slate-700`}
+              disabled={pending}
+              required
             />
           </div>
           <CtaButton
             widthClass="w-full"
             paddingClasses="px-5 py-2.5"
-            fontStyleClass={spaceGrotesk.className}
+            fontStyleClass="font-heading"
             withIcon={true}
+            type="submit"
+            disabled={pending}
           >
             <span className="grid content-center">
               <Zap size={18} className="fill-onPrimary" />
             </span>
-            Start Analysis
+            {pending ? "Fetching..." : "Start Analysis"}
           </CtaButton>
         </form>
+        {pending && <AnalysisLoader />}
       </section>
       <Footer paddingClasses="px-8 py-4" />
     </main>

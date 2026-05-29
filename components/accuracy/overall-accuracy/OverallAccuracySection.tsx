@@ -5,8 +5,10 @@ import OverallAccuracy from "./OverallAccuracy";
 
 export default function OverallAccuracySection({
   overallAccuracy,
+  totalGames,
 }: {
   overallAccuracy: number;
+  totalGames: number;
 }) {
   return (
     <section className="flex gap-12 flex-col justify-between items-center p-6 bg-surfaceLow rounded-lg md:flex-row">
@@ -14,7 +16,7 @@ export default function OverallAccuracySection({
         <HeaderEyebrow>Technical Proficiency</HeaderEyebrow>
         <h2 className={`font-heading`}>Overall Accuracy</h2>
         <HeaderDesc colorClass="text-onSurfaceLow">
-          Based on 1,248 games analyzed
+          Based on {totalGames} games analyzed
         </HeaderDesc>
       </header>
       <div className="relative size-56">
