@@ -7,9 +7,6 @@ const nextConfig: NextConfig = {
       new URL("https://lh3.googleusercontent.com/aida-public/**"),
     ],
   },
-  env: {
-    NEXT_PUBLIC_API_URL: "https://api.chess.com/pub/player/",
-  },
 };
 
 export default nextConfig;
