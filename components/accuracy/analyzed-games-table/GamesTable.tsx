@@ -15,7 +15,6 @@ import {
 } from "@tanstack/react-table";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DUMMY_GAMES } from "@/util/dummy-games";
-import { spaceGrotesk } from "@/app/fonts";
 import { getCellPadding } from "@/util/table";
 
 import GameAccuracy from "./GameAccuracy";
@@ -117,7 +116,7 @@ export default function GamesTable() {
             {gamesTable.getHeaderGroups().map((headerGroup) => (
               <tr
                 key={headerGroup.id}
-                className={`${spaceGrotesk.className} text-[10px] text-onSurfaceLow tracking-widest`}
+                className={`font-heading text-[10px] text-onSurfaceLow tracking-widest`}
               >
                 {headerGroup.headers.map((header) => {
                   const pxClasses = getCellPadding(header.index, totalColumns);

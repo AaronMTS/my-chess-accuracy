@@ -1,5 +1,3 @@
-import { spaceGrotesk } from "@/app/fonts";
-
 export default function GameAccuracy({ accuracy }: { accuracy: number }) {
   let additionalClasses: string;
 
@@ -16,7 +14,7 @@ export default function GameAccuracy({ accuracy }: { accuracy: number }) {
 
   return (
     <div
-      className={`w-fit p-1 ${spaceGrotesk.className} ${additionalClasses} text-sm font-semibold rounded-lg tabular-nums tracking-tighter`}
+      className={`w-fit p-1 font-heading ${additionalClasses} text-sm font-semibold rounded-lg tabular-nums tracking-tighter`}
     >
       {accuracy.toFixed(1)}%
     </div>

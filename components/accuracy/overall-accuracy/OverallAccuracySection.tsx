@@ -1,4 +1,3 @@
-import { spaceGrotesk } from "@/app/fonts";
 import HeaderDesc from "../../HeaderDesc";
 import HeaderEyebrow from "../../HeaderEyebrow";
 import OverallAccuracyIndicator from "./OverallAccuracyIndicator";
@@ -13,7 +12,7 @@ export default function OverallAccuracySection({
     <section className="flex gap-12 flex-col justify-between items-center p-6 bg-surfaceLow rounded-lg md:flex-row">
       <header className="space-y-2 text-center md:text-left">
         <HeaderEyebrow>Technical Proficiency</HeaderEyebrow>
-        <h2 className={`${spaceGrotesk.className}`}>Overall Accuracy</h2>
+        <h2 className={`font-heading`}>Overall Accuracy</h2>
         <HeaderDesc colorClass="text-onSurfaceLow">
           Based on 1,248 games analyzed
         </HeaderDesc>

@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import { RivalDetails, RivalType } from "@/types/rivals";
-import { spaceGrotesk } from "@/app/fonts";
 import { Medal, Skull, Star, Trophy } from "lucide-react";
 import WinOrLossCard from "./WinOrLossCard";
 
@@ -51,11 +50,11 @@ export default function RivalCard({
   index: number;
 }) {
   const winPercentage = Math.round(
-    (rival.wins / (rival.wins + rival.draw + rival.loss)) * 100
+    (rival.wins / (rival.wins + rival.draw + rival.loss)) * 100,
   );
 
   return (
-    <div className="space-y-4.5 bg-surfaceHigh p-6 rounded-2xl">
+    <div className="space-y-4.5 bg-surfaceHigher p-6 rounded-2xl">
       <div className="flex gap-3">
         <span className="shrink-0 inline-block ring-2 ring-primary/20 rounded-xl overflow-hidden">
           <Image
@@ -66,9 +65,7 @@ export default function RivalCard({
           />
         </span>
         <span className="grow self-center-safe overflow-hidden">
-          <h5
-            className={`${spaceGrotesk.className} overflow-hidden text-ellipsis`}
-          >
+          <h5 className={`font-heading overflow-hidden text-ellipsis`}>
             {rival.username}
           </h5>
           <small

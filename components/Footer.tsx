@@ -1,5 +1,3 @@
-import { spaceGrotesk } from "@/app/fonts";
-
 export default function Footer({
   paddingClasses,
   otherClasses = "",
@@ -9,7 +7,7 @@ export default function Footer({
 }) {
   return (
     <footer
-      className={`space-y-1 ${paddingClasses} ${spaceGrotesk.className} text-[10px] text-onSurfaceLow/70 text-center tracking-wider border-t border-surfaceHigh ${otherClasses}`}
+      className={`space-y-1 ${paddingClasses} font-heading text-[10px] text-onSurfaceLow/70 text-center tracking-wider border-t border-surfaceHigher ${otherClasses}`}
     >
       <p>MyChessAccuracy &copy; 2026</p>
       <p>

@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { spaceGrotesk } from "@/app/fonts";
 import logo from "@/assets/logo.svg";
 import Image from "next/image";
 import ToggleSidebarBtn from "./ToggleSidebarBtn";
@@ -12,7 +11,7 @@ export default function Navbar({ hasSidebarBtn }: { hasSidebarBtn: boolean }) {
         {hasSidebarBtn && <ToggleSidebarBtn />}
         <Link
           href="/"
-          className={`w-fit ${hasSidebarBtn ? "mx-auto md:ms-0" : ""} flex gap-2 items-center ${spaceGrotesk.className} text-lg *:leading-6 font-semibold text-primary`}
+          className={`w-fit ${hasSidebarBtn ? "mx-auto md:ms-0" : ""} flex gap-2 items-center font-heading text-lg *:leading-6 font-semibold text-primary`}
         >
           <span className="relative -top-0.5 size-6">
             <Image

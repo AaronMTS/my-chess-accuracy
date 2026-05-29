@@ -1,5 +1,4 @@
 import { RivalDetails } from "@/types/rivals";
-import { spaceGrotesk } from "@/app/fonts";
 import { Swords } from "lucide-react";
 import HeaderEyebrow from "@/components/HeaderEyebrow";
 import RivalSection from "@/components/rivals/RivalSection";
@@ -76,7 +75,7 @@ export default function RivalsPage() {
       <section className="relative p-8 flex gap-12 justify-between bg-surfaceLow rounded-2xl">
         <header className="relative z-10 space-y-4 lg:w-3/4">
           <HeaderEyebrow>Competitive Landscape</HeaderEyebrow>
-          <h1 className={spaceGrotesk.className}>
+          <h1 className="font-heading">
             Your Strategic <em className="text-primary">Nemesis</em> Map
           </h1>
           <p>

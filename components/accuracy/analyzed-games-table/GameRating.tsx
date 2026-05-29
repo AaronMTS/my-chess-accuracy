@@ -1,5 +1,4 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
-import { spaceGrotesk } from "@/app/fonts";
 
 // const RATING_CHANGE_ICONS = {
 //     win: <ArrowBigUp />,
@@ -14,9 +13,7 @@ const RATING_CHANGE_ICONS = [
 export default function GameRating({ rating }: { rating: number }) {
   return (
     <div className="w-full flex gap-2 items-center">
-      <span
-        className={`${spaceGrotesk.className} text-sm font-bold tabular-nums`}
-      >
+      <span className={`font-heading text-sm font-bold tabular-nums`}>
         {rating}
       </span>
       {RATING_CHANGE_ICONS[rating % 2]}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { manrope } from "./fonts";
+import { manrope, spaceGrotesk } from "./fonts";
+import ClientSideProvider from "./providers";
 
 export const metadata: Metadata = {
   title: "MyChessAccuracy",
@@ -15,11 +16,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${manrope.className} bg-surface text-onSurface antialiased`}
+      className={`${manrope.className} ${spaceGrotesk.variable} bg-surface text-onSurface antialiased`}
     >
       <body className="min-h-dvh flex flex-col">
         <div id="modal_root"></div>
-        {children}
+        <ClientSideProvider>{children}</ClientSideProvider>
       </body>
     </html>
   );

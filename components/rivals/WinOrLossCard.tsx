@@ -1,5 +1,3 @@
-import { spaceGrotesk } from "@/app/fonts";
-
 export default function WinOrLossCard({
   result,
   amount,
@@ -18,7 +16,7 @@ export default function WinOrLossCard({
         {`TOTAL ${result === "win" ? "WINS" : "LOSSES"}`}
       </p>
       <h5
-        className={`${spaceGrotesk.className} ${
+        className={`font-heading ${
           textColor || ""
         } leading-4.5 sm:leading-5 tracking-normal`}
       >

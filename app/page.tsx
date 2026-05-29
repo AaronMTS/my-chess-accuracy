@@ -4,7 +4,6 @@ import CtaButton from "@/components/buttons/CtaButton";
 import HeaderEyebrow from "@/components/HeaderEyebrow";
 import Navbar from "@/components/navbar/Navbar";
 import { Swords, TrendingUp, Zap } from "lucide-react";
-import { spaceGrotesk } from "./fonts";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import dummyPfp1 from "@/assets/dummy-pfp1.jpg";
 import dummyPfp2 from "@/assets/dummy-pfp2.jpg";
@@ -20,7 +19,7 @@ export default function Home() {
       <section className="space-y-7 relative mx-auto max-w-5xl">
         <div className="space-y-3 relative z-10 px-8 md:w-3/4">
           <HeaderEyebrow>Chess Analytics</HeaderEyebrow>
-          <h1 className={spaceGrotesk.className}>
+          <h1 className="font-heading">
             Analyze your <em className="text-primary">Tactical Depth</em> with
             Precision
           </h1>
@@ -51,7 +50,7 @@ export default function Home() {
           <CtaButton
             widthClass="w-full"
             paddingClasses="px-8 py-3"
-            fontStyleClass={spaceGrotesk.className}
+            fontStyleClass="font-heading"
             hoverClasses="transition-transform hover:scale-104"
             withIcon={true}
             isLink={true}
@@ -69,7 +68,7 @@ export default function Home() {
       </section>
       <section className="space-y-8 px-8 mx-auto max-w-5xl">
         <header className="relative">
-          <h2 className={spaceGrotesk.className}>Deep Insights</h2>
+          <h2 className="font-heading">Deep Insights</h2>
           <svg
             className="absolute left-0 -bottom-2.5 w-20 h-0.75"
             viewBox="0 0 100 3"
@@ -88,7 +87,7 @@ export default function Home() {
           <div className="space-y-3 relative bg-surfaceLow p-8 overflow-hidden rounded-lg">
             <TrendingUp size={28} className="text-primary" />
             <div className="space-y-2">
-              <h3 className={spaceGrotesk.className}>Overall Games Accuracy</h3>
+              <h3 className="font-heading">Overall Games Accuracy</h3>
               <p className="w-3/4 text-onSurfaceLow sm:w-4/5">
                 Track your precision across all your matches. Visualize your
                 improvement curve.
@@ -140,12 +139,12 @@ export default function Home() {
               </svg>
             </div>
           </div>
-          <div className="space-y-8 bg-surfaceHigh p-8 text-center rounded-lg">
+          <div className="space-y-8 bg-surfaceHigher p-8 text-center rounded-lg">
             <div className="space-y-3">
               <div className="size-fit mx-auto p-4 bg-tertiaryContainer/30 outline outline-tertiaryContainer rounded">
                 <Swords size={30} className="stroke-tertiary fill-tertiary" />
               </div>
-              <h3 className={spaceGrotesk.className}>Rivals & Nemeses</h3>
+              <h3 className="font-heading">Rivals & Nemeses</h3>
               <p>
                 Identify who you beat most and who is your toughest challenge.
                 Detailed win/loss ratios per opponent.
@@ -159,10 +158,10 @@ export default function Home() {
                   width={36}
                   height={36}
                   alt={`Chess dummy profile ${index + 1}`}
-                  className="-ml-0.5 outline-[4.5px] outline-surfaceHigh rounded-md"
+                  className="-ml-0.5 outline-[4.5px] outline-surfaceHigher rounded-md"
                 />
               ))}
-              <div className="-ml-0.5 flex items-center justify-center size-9 bg-gray-600 text-sm font-bold outline-[4.5px] outline-surfaceHigh rounded-md">
+              <div className="-ml-0.5 flex items-center justify-center size-9 bg-gray-600 text-sm font-bold outline-[4.5px] outline-surfaceHigher rounded-md">
                 <p>+3</p>
               </div>
             </div>
