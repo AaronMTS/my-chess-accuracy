@@ -11,9 +11,7 @@ export default function SidebarBackdrop() {
 
   return (
     <AnimatePresence>
-      {isShown && (
-        <Backdrop handleClick={closeSidebar} animationDuration={0.3} />
-      )}
+      {isShown && <Backdrop handleClick={closeSidebar} zIndexClass="z-30" />}
     </AnimatePresence>
   );
 }

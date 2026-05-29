@@ -28,7 +28,7 @@ export default function Home() {
             positioning with high-fidelity performance metrics.
           </p>
         </div>
-        <div className="absolute top-13 right-13 rotate-15 h-9/10 aspect-square opacity-25 md:opacity-50 lg:h-full">
+        <div className="absolute top-13 right-13 rotate-15 h-9/10 aspect-square opacity-15 md:opacity-50 lg:h-full">
           <svg
             className="size-full"
             viewBox="0 0 500 500"
