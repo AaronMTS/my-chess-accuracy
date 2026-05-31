@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { manrope, spaceGrotesk } from "./fonts";
-import ClientSideProvider from "./providers";
+import ClientSideProvider from "../providers/ClientProviders";
 
 export const metadata: Metadata = {
   title: "MyChessAccuracy",

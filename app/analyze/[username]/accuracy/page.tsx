@@ -1,39 +1,36 @@
-"use client";
-
 import OverallAccuracySection from "@/components/accuracy/overall-accuracy/OverallAccuracySection";
 import GamesTable from "@/components/accuracy/analyzed-games-table/GamesTable";
-import { usePlayerDetails } from "@/hooks/usePlayerDetail";
-import { motion } from "motion/react";
-import { useMemo } from "react";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { getCleanUsername } from "@/util/validation";
+import { notFound, redirect } from "next/navigation";
+import { getQueryClient } from "@/providers/get-query-client";
+import { getArchiveQueryOptions } from "@/util/query-options";
 
-export default function AccuracyPage() {
-  const { data: player } = usePlayerDetails();
-  const gamesLength = useMemo(() => player?.games.length, [player]);
+export default async function AccuracyPage({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}) {
+  const queryClient = getQueryClient();
+  const { username } = await params;
+  const cleanUsername = getCleanUsername(username);
 
-  if (!player) {
-    return (
-      <motion.div
-        animate={{
-          opacity: [1, 0.5, 1],
-        }}
-        transition={{ repeat: Infinity, duration: 1.5, repeatType: "loop" }}
-        className="size-full flex flex-col gap-8"
-      >
-        <div className="shrink-0 h-[35%] bg-surfaceLow rounded-lg"></div>
-        <div className="grow bg-surfaceLow rounded-lg"></div>
-      </motion.div>
-    );
+  if (!cleanUsername) {
+    redirect(`analyze`);
+  }
+
+  try {
+    await queryClient.fetchQuery(getArchiveQueryOptions(cleanUsername));
+  } catch {
+    notFound();
   }
 
   return (
-    <>
-      <OverallAccuracySection
-        overallAccuracy={player.accuracy}
-        totalGames={gamesLength!}
-      />
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <OverallAccuracySection username={cleanUsername} />
       <section className="bg-surface flex flex-col rounded-lg overflow-hidden">
-        <GamesTable games={player.games} />
+        <GamesTable username={cleanUsername} />
       </section>
-    </>
+    </HydrationBoundary>
   );
 }

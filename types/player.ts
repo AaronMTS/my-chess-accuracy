@@ -5,6 +5,10 @@ export type Player = {
   imageUrl: string;
   username: string;
   rating: number;
+};
+
+export type PlayerArchive = {
   accuracy: number;
   games: Games[];
+  gamesLength: number;
 };

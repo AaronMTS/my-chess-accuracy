@@ -1,24 +1,25 @@
 "use client";
 
-import { useMemo, useActionState } from "react";
+import { useRef } from "react";
 import { Zap, UserRound } from "lucide-react";
 
 import Navbar from "@/components/navbar/Navbar";
 import CtaButton from "@/components/buttons/CtaButton";
 import Footer from "@/components/Footer";
-import { handleAnalyzeGames } from "@/lib/actions";
-import AnalysisLoader from "@/components/AnalysisLoader";
+import { useRouter } from "next/navigation";
+import { getCleanUsername } from "@/util/validation";
 
 export default function AnalyzePage() {
-  const requestId = useMemo(() => crypto.randomUUID(), []);
+  const usernameRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter();
 
-  const analyzeAction = handleAnalyzeGames.bind(null, requestId);
-  const [analyzeFormState, analyzeFormAction, pending] = useActionState(
-    analyzeAction,
-    {
-      errorMessage: null,
-    },
-  );
+  function handleSubmitUsername(username: string) {
+    const cleanUsername = getCleanUsername(username);
+
+    if (cleanUsername) {
+      router.push(`analyze/${cleanUsername}/accuracy`);
+    }
+  }
 
   return (
     <main className="flex flex-col gap-3 h-dvh">
@@ -31,10 +32,7 @@ export default function AnalyzePage() {
             tactical breakdown of recent performance.
           </p>
         </div>
-        <form
-          action={analyzeFormAction}
-          className="bg-surfaceLow p-6 flex flex-col items-start gap-3 rounded-xl"
-        >
+        <div className="bg-surfaceLow p-6 flex flex-col items-start gap-3 rounded-xl">
           <label
             htmlFor="username"
             className="text-[8px] text-primary tracking-[0.2em] font-bold uppercase"
@@ -46,12 +44,11 @@ export default function AnalyzePage() {
               <UserRound size={16} strokeWidth="3" className="text-slate-500" />
             </span>
             <input
+              ref={usernameRef}
               type="text"
-              name="username"
               id="username"
               placeholder="e.g. hikaru"
-              className={`grow pr-5 py-3 font-heading font-medium outline-0 placeholder:text-slate-700`}
-              disabled={pending}
+              className="grow pr-5 py-3 font-heading font-medium outline-0 placeholder:text-slate-700"
               required
             />
           </div>
@@ -60,16 +57,14 @@ export default function AnalyzePage() {
             paddingClasses="px-5 py-2.5"
             fontStyleClass="font-heading"
             withIcon={true}
-            type="submit"
-            disabled={pending}
+            onClick={() => handleSubmitUsername(usernameRef.current!.value)}
           >
             <span className="grid content-center">
               <Zap size={18} className="fill-onPrimary" />
             </span>
-            {pending ? "Fetching..." : "Start Analysis"}
+            Start Analysis
           </CtaButton>
-        </form>
-        {pending && <AnalysisLoader />}
+        </div>
       </section>
       <Footer paddingClasses="px-8 py-4" />
     </main>
