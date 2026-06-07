@@ -1,8 +1,8 @@
-export interface Root {
-  games: Game[];
+export interface ReturnedGameRoot {
+  games: ReturnedGame[];
 }
 
-export interface Game {
+export interface ReturnedGame {
   url: string;
   pgn: string;
   time_control: string;

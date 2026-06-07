@@ -1,4 +1,5 @@
 import { Games } from "@/types/games";
+import { RivalDetails } from "./rivals";
 
 export type Player = {
   id: number;
@@ -11,4 +12,5 @@ export type PlayerArchive = {
   accuracy: number;
   games: Games[];
   gamesLength: number;
+  rivals: RivalDetails[];
 };

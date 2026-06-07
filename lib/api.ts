@@ -1,6 +1,8 @@
+import { Games, GamesOptionalAccuracy } from "@/types/games";
 import { Player, PlayerArchive } from "@/types/player";
-import type { Root as GamesArchiveRoot } from "@/types/returnedGames";
-import mapChessGameToGame from "@/util/chess";
+import type { ReturnedGameRoot as GamesArchiveRoot } from "@/types/returnedGames";
+import { RivalDetails } from "@/types/rivals";
+import mapChessGameToGame, { isDraw, isLoss } from "@/util/chess";
 import { normalizeUsername } from "@/util/strings";
 import { getCleanUsername } from "@/util/validation";
 
@@ -114,28 +116,59 @@ export async function fetchArchive(
     }),
   );
 
-  const allGames = archiveJson.flatMap((archive) => archive.games ?? []);
-  const analyzedGames = allGames.filter(
-    (game) =>
-      game.accuracies &&
-      [
-        normalizeUsername(game.white.username),
-        normalizeUsername(game.black.username),
-      ].includes(normalizeUsername(cleanUsername)),
-  );
+  const allGames = archiveJson
+    .flatMap((archive) => archive.games ?? [])
+    .map((game) => mapChessGameToGame(game, cleanUsername));
 
-  const games = analyzedGames.map((game, index) =>
-    mapChessGameToGame(game, cleanUsername, index + 1),
-  );
+  const analyzedGames = allGames.filter((game) => Boolean(game.accuracy));
 
   const overallAccuracy =
-    games.length > 0
-      ? games.reduce((sum, current) => sum + current.accuracy, 0) / games.length
+    analyzedGames.length > 0
+      ? analyzedGames.reduce((sum, current) => sum + current.accuracy!, 0) /
+        analyzedGames.length
       : 0;
+
+  const rivals = fetchPlayerOpponents(allGames);
 
   return {
     accuracy: overallAccuracy,
-    games,
+    games: analyzedGames as Games[],
     gamesLength: analyzedGames.length,
+    rivals,
   };
+}
+
+export function fetchPlayerOpponents(
+  games: GamesOptionalAccuracy[],
+): RivalDetails[] {
+  const opponents = new Map<string, RivalDetails>();
+
+  for (const game of games) {
+    const opponentKey = normalizeUsername(game.opponent);
+    const existing = opponents.get(opponentKey);
+    const rivalPayload: RivalDetails = {
+      id: existing?.id ?? 0,
+      imageUrl: DEFAULT_AVATAR,
+      username: game.opponent,
+      rating: game.rating,
+      wins: (existing?.wins ?? 0) + (game.result === "win" ? 1 : 0),
+      draw: (existing?.draw ?? 0) + (isDraw(game.result) ? 1 : 0),
+      loss: (existing?.loss ?? 0) + (isLoss(game.result) ? 1 : 0),
+    };
+
+    opponents.set(opponentKey, rivalPayload);
+  }
+
+  let idCounter = 1;
+  return Array.from(opponents.values())
+    .filter((opponent) => opponent.wins + opponent.draw + opponent.loss >= 15)
+    .map((opponent) => ({
+      ...opponent,
+      id: opponent.id || idCounter++,
+    }))
+    .sort(
+      (a, b) =>
+        b.wins / (b.wins + b.loss + b.draw) -
+        a.wins / (a.wins + a.loss + a.draw),
+    );
 }
