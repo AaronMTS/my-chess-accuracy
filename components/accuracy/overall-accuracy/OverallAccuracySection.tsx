@@ -5,18 +5,20 @@ import HeaderEyebrow from "../../HeaderEyebrow";
 import OverallAccuracyIndicator from "./OverallAccuracyIndicator";
 import OverallAccuracy from "./OverallAccuracy";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { fetchArchive } from "@/lib/api";
+import { getArchiveQueryOptions } from "@/util/query-options";
 
 export default function OverallAccuracySection({
   username,
 }: {
   username: string;
 }) {
-  const { data } = useSuspenseQuery({
-    queryKey: ["archive", username.toLowerCase()],
-    queryFn: ({ signal }: { signal: AbortSignal | undefined }) =>
-      fetchArchive(username, signal),
-  });
+  const { data, isError, error } = useSuspenseQuery(
+    getArchiveQueryOptions(username),
+  );
+
+  if (isError) {
+    return <p className="text-center">{error.message}</p>;
+  }
 
   return (
     <section className="flex gap-12 flex-col justify-between items-center p-6 bg-surfaceLow rounded-lg md:flex-row">

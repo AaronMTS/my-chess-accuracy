@@ -25,17 +25,13 @@ import GameRating from "./GameRating";
 import TableNavButton from "../../buttons/TableNavButton";
 import GamesTableHeader from "./GamesTableHeader";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { fetchArchive } from "@/lib/api";
+import { getArchiveQueryOptions } from "@/util/query-options";
 
 const DATE_ADDITIONAL_CLASSES = "text-xs text-onSurfaceLow font-semibold";
 
 export default function GamesTable({ username }: { username: string }) {
   "use no memo";
-  const { data } = useSuspenseQuery({
-    queryKey: ["archive", username.toLowerCase()],
-    queryFn: ({ signal }: { signal: AbortSignal | undefined }) =>
-      fetchArchive(username, signal),
-  });
+  const { data } = useSuspenseQuery(getArchiveQueryOptions(username));
 
   const { games } = data;
 
