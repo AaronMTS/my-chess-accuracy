@@ -61,7 +61,12 @@ export default function Home() {
               <Zap size={18} className="fill-onPrimary" />
             </span>
           </CtaButton>
-          <SecondaryButton paddingClasses="px-8 py-3" textSizeClass="text-sm">
+          <SecondaryButton
+            paddingClasses="px-8 py-3"
+            textSizeClass="text-sm"
+            isLink={true}
+            href="analyze/gothamchess/accuracy"
+          >
             View Demo
           </SecondaryButton>
         </div>
