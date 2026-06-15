@@ -65,7 +65,10 @@ export default function RivalCard({
           />
         </span>
         <span className="grow self-center-safe overflow-hidden">
-          <h5 className={`font-heading overflow-hidden text-ellipsis`}>
+          <h5
+            className={`font-heading overflow-hidden text-ellipsis`}
+            title={rival.username}
+          >
             {rival.username}
           </h5>
           <small
