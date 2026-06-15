@@ -12,7 +12,7 @@ export type Games = {
   color: string;
   mode: string;
   date: string;
-  moves: number;
+  moves: number | "N/A";
   rating: number;
   result: ChessResult;
 };

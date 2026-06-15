@@ -14,12 +14,14 @@ export default function RivalsPage() {
       ? decodeURIComponent(params.username)
       : "";
 
-  const { data: rivals } = useSuspenseQuery(
-    getArchiveRivalsQueryOptions(username),
+  const { data } = useSuspenseQuery(getArchiveRivalsQueryOptions(username));
+
+  const filteredRivals = data.filteredRivals.filter(
+    (rival) => rival.wins + rival.draw + rival.loss >= 15,
   );
 
-  const mostDefeated = rivals.slice(0, 3);
-  const biggestNemeses = rivals.slice(-3).toReversed();
+  const mostDefeated = filteredRivals.slice(0, 3);
+  const biggestNemeses = filteredRivals.slice(-3).toReversed();
 
   return (
     <>
@@ -30,10 +32,9 @@ export default function RivalsPage() {
             Your Strategic <em className="text-primary">Nemesis</em> Map
           </h1>
           <p>
-            Analyzing {rivals.length} rival relationships from your analyzed
-            games. Your dominance is clearest in mid-game transitions, while
-            defensive structures remain your primary hurdle against high-ELO
-            rivals.
+            Analyzing {data.totalRivals} unique opponents from all of your
+            games. View a tactical breakdown of performance against your top
+            competitors.
           </p>
         </header>
         <div className="absolute top-0 right-0 p-8 size-fit flex justify-center items-center">

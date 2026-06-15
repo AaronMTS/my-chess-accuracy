@@ -105,7 +105,7 @@ export async function fetchArchive(
     archiveUrls.map((url) => fetch(url, { signal })),
   );
 
-  const archiveJson = await Promise.all(
+  const archiveJson = await Promise.allSettled(
     archiveResponses.map(async (response, index) => {
       if (!response.ok) {
         throw new Error(
@@ -117,7 +117,13 @@ export async function fetchArchive(
   );
 
   const allGames = archiveJson
-    .flatMap((archive) => archive.games ?? [])
+    .flatMap((archive) => {
+      if (archive.status === "fulfilled") {
+        return archive.value.games;
+      }
+      console.error(archive.reason);
+      return [];
+    })
     .map((game) => mapChessGameToGame(game, cleanUsername));
 
   const analyzedGames = allGames.filter((game) => Boolean(game.accuracy));
@@ -140,7 +146,7 @@ export async function fetchArchive(
 
 export function fetchPlayerOpponents(
   games: GamesOptionalAccuracy[],
-): RivalDetails[] {
+): {totalRivals: number; filteredRivals: RivalDetails[]} {
   const opponents = new Map<string, RivalDetails>();
 
   for (const game of games) {
@@ -160,15 +166,21 @@ export function fetchPlayerOpponents(
   }
 
   let idCounter = 1;
-  return Array.from(opponents.values())
-    .filter((opponent) => opponent.wins + opponent.draw + opponent.loss >= 15)
+  const rivals = Array.from(opponents.values());
+  return { totalRivals: rivals.length, filteredRivals: rivals.filter(opponent => opponent.wins + opponent.draw + opponent.loss >=15)
     .map((opponent) => ({
       ...opponent,
       id: opponent.id || idCounter++,
     }))
-    .sort(
-      (a, b) =>
+    .sort((a, b) => {
+      const sortBasis =
         b.wins / (b.wins + b.loss + b.draw) -
-        a.wins / (a.wins + a.loss + a.draw),
-    );
+        a.wins / (a.wins + a.loss + a.draw);
+
+      if (sortBasis === 0) {
+        return b.wins - a.wins;
+      }
+
+      return sortBasis;
+    })};
 }

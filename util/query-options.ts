@@ -1,5 +1,5 @@
 import { fetchArchive } from "@/lib/api";
-import { RivalDetails } from "@/types/rivals";
+import { PlayerArchive } from "@/types/player";
 
 export function getArchiveQueryOptions(username: string) {
   return {
@@ -15,7 +15,7 @@ export function getArchiveRivalsQueryOptions(username: string) {
     queryKey: ["archive", username.toLowerCase(), "rivals"],
     queryFn: ({ signal }: { signal: AbortSignal | undefined }) =>
       fetchArchive(username, signal),
-    select: (data: { rivals: RivalDetails[] }) => data.rivals,
+    select: (data: PlayerArchive) => data.rivals,
     staleTime: 1000 * 60 * 5,
   };
 }

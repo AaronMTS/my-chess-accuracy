@@ -12,5 +12,5 @@ export type PlayerArchive = {
   accuracy: number;
   games: Games[];
   gamesLength: number;
-  rivals: RivalDetails[];
+  rivals: { totalRivals: number; filteredRivals: RivalDetails[] };
 };

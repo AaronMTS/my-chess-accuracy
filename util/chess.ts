@@ -51,21 +51,16 @@ export function parseDateFromPgn(pgn: string, game: ChessGame) {
 }
 
 export function parseMoveCount(pgn: string) {
-  try {
-    const moveSection = pgn
-      .split(/\r?\n\r?\n/)
-      .slice(1)
-      .join(" ");
-    const moveNumbers = [...moveSection.matchAll(/\b(\d+)\./g)].map((match) =>
-      Number(match[1]),
-    );
+  if (!pgn) {
+    return undefined;
+  }
 
-    if (moveNumbers.length > 0) {
-      return moveNumbers[moveNumbers.length - 1];
-    }
-  } catch (error) {
-    console.error(error);
-    return 0;
+  const lastMoveRegex =
+    /\d+\.{1,3}\s[\w\d+#=-]+\s{\[%clk\s[\d:\.]+\]}\s(?:1|0|1\/2)-(?:1|0|1\/2)/;
+  const lastMove = pgn.match(lastMoveRegex);
+
+  if (lastMove) {
+    return +lastMove[0].split(".")[0];
   }
 }
 
@@ -90,7 +85,7 @@ export default function mapChessGameToGame<
     color: playerColor,
     mode: game.time_class || tags.Event || "unknown",
     date: parseDateFromPgn(game.pgn, game),
-    moves: parseMoveCount(game.pgn) || 0,
+    moves: parseMoveCount(game.pgn) || "N/A",
     rating,
     result,
   };
