@@ -16,9 +16,11 @@ export default function AnalyzePage() {
   function handleSubmitUsername(username: string) {
     const cleanUsername = getCleanUsername(username);
 
-    if (cleanUsername) {
-      router.push(`analyze/${cleanUsername}/accuracy`);
+    if (!cleanUsername) {
+      return;
     }
+
+    router.push(`analyze/${cleanUsername}/accuracy`);
   }
 
   return (
@@ -47,7 +49,7 @@ export default function AnalyzePage() {
               ref={usernameRef}
               type="text"
               id="username"
-              placeholder="e.g. hikaru"
+              placeholder="e.g. GothamChess"
               className="grow pr-5 py-3 font-heading font-medium outline-0 placeholder:text-slate-700"
               required
             />

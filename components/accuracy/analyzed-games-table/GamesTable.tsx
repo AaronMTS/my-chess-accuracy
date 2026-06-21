@@ -10,7 +10,6 @@ import {
   flexRender,
   PaginationState,
   getPaginationRowModel,
-  SortingState,
   getSortedRowModel,
 } from "@tanstack/react-table";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -26,12 +25,15 @@ import TableNavButton from "../../buttons/TableNavButton";
 import GamesTableHeader from "./GamesTableHeader";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getArchiveQueryOptions } from "@/util/query-options";
+import { useSortingStore } from "@/store/table-sort";
 
 const DATE_ADDITIONAL_CLASSES = "text-xs text-onSurfaceLow font-semibold";
 
 export default function GamesTable({ username }: { username: string }) {
   "use no memo";
-  const { data } = useSuspenseQuery(getArchiveQueryOptions(username));
+  const { data, isError, error } = useSuspenseQuery(
+    getArchiveQueryOptions(username),
+  );
 
   const { games } = data;
 
@@ -87,18 +89,27 @@ export default function GamesTable({ username }: { username: string }) {
     pageSize: 10,
   });
 
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const sorting = useSortingStore((state) => state.sortBy);
+  const setSorting = useSortingStore((state) => state.updateSorting);
 
   const gamesTable = useReactTable({
     data: games,
     columns,
     state: { pagination, sorting },
     onPaginationChange: setPagination,
-    onSortingChange: setSorting,
+    onSortingChange: () => setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
+
+  if (isError) {
+    return (
+      <p className="text-center">
+        {error.message || "Something went wrong. Please try again later."}
+      </p>
+    );
+  }
 
   const totalColumns = gamesTable.getAllLeafColumns().length;
   const totalRows = gamesTable.getPrePaginationRowModel().rows.length;
@@ -117,11 +128,21 @@ export default function GamesTable({ username }: { username: string }) {
     }
   }
 
+  // function handleSortTable({
+  //   id,
+  //   desc,
+  // }: {
+  //   id: "accuracy" | "rating";
+  //   desc: boolean;
+  // }) {
+  //   gamesTable.setSorting([{ id, desc }]);
+  // }
+
   return (
     <>
       <GamesTableHeader />
       <div className="relative overflow-x-auto overflow-y-hidden">
-        <table className="w-full min-w-175 table-fixed border-collapse text-left">
+        <table className="w-full min-w-175 table-fixed mb-2.5 border-collapse text-left">
           <thead>
             {gamesTable.getHeaderGroups().map((headerGroup) => (
               <tr
@@ -148,8 +169,6 @@ export default function GamesTable({ username }: { username: string }) {
           </thead>
           <tbody>
             {gamesTable.getRowModel().rows.map((row) => {
-              const totalRows = row.getVisibleCells().length;
-
               return (
                 <tr key={row.id}>
                   {row.getVisibleCells().map((cell, index) => {
@@ -158,7 +177,7 @@ export default function GamesTable({ username }: { username: string }) {
                     return (
                       <td
                         key={cell.id}
-                        className={`${cell.column.id === "accuracy" ? "sticky left-0 bg-surface" : ""} ${cell.row.index < totalRows - 1 ? "py-5" : "pt-5 pb-7.5"} ${pxClasses} ${cell.column.id === "date" ? DATE_ADDITIONAL_CLASSES : ""}`}
+                        className={`${cell.column.id === "accuracy" ? "sticky left-0 bg-surface" : ""} py-5 ${pxClasses} ${cell.column.id === "date" ? DATE_ADDITIONAL_CLASSES : ""}`}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

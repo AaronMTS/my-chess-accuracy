@@ -10,7 +10,9 @@ export default function GamesTableHeader() {
           Full Session History
         </HeaderDesc>
       </div>
-      <SortGamesContainer />
+      <span className="flex items-center gap-3">
+        <SortGamesContainer />
+      </span>
     </header>
   );
 }
