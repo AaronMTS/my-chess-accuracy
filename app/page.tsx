@@ -16,8 +16,8 @@ export default function Home() {
   return (
     <main className="space-y-14">
       <Navbar hasSidebarBtn={false} />
-      <section className="space-y-7 relative mx-auto max-w-5xl">
-        <div className="space-y-3 relative z-10 px-8 md:w-3/4">
+      <section className="space-y-7 relative mx-auto px-8 max-w-5xl">
+        <div className="space-y-3 relative z-10 md:w-3/4">
           <HeaderEyebrow>Chess Analytics</HeaderEyebrow>
           <h1 className="font-heading">
             Analyze your <em className="text-primary">Tactical Depth</em> with
@@ -28,7 +28,7 @@ export default function Home() {
             positioning with high-fidelity performance metrics.
           </p>
         </div>
-        <div className="absolute top-13 right-13 rotate-15 h-9/10 aspect-square opacity-15 md:opacity-50 lg:h-full">
+        <div className="absolute top-13 right-1/2 translate-x-1/2 rotate-15 h-9/10 aspect-square opacity-15 xs:right-13 xs:translate-x-0 md:opacity-50 lg:h-full">
           <svg
             className="size-full"
             viewBox="0 0 500 500"
@@ -46,7 +46,7 @@ export default function Home() {
             <rect y="250" width="125" height="125" fill="#88D982" />
           </svg>
         </div>
-        <div className="relative z-10 flex gap-3 px-8 flex-wrap *:basis-0 md:w-3/4">
+        <div className="relative z-10 flex gap-3 flex-wrap *:basis-0 md:w-3/4">
           <CtaButton
             widthClass="w-full"
             paddingClasses="px-8 py-3"
@@ -88,7 +88,7 @@ export default function Home() {
             />
           </svg>
         </header>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(325px,1fr))] gap-6">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] gap-6">
           <div className="space-y-3 relative bg-surfaceLow p-8 overflow-hidden rounded-lg">
             <TrendingUp size={28} className="text-primary" />
             <div className="space-y-2">

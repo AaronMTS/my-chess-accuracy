@@ -30,6 +30,8 @@
   --color-errorContainer: #93000a;
 
   --font-heading: var(--font-space-grotesk);
+
+  --breakpoint-xs: 420px;
 }
 
 @layer base {

@@ -79,7 +79,7 @@ export default function RivalCard({
             {rival.rating} ELO
           </small>
         </span>
-        <span className="ps-4">
+        <span>
           {type === "MOST_DEFEATED"
             ? MOST_DEFEATED_ICONS[index]
             : BIGGEST_NEMESES_ICONS[index]}

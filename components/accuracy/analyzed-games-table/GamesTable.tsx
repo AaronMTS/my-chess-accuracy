@@ -68,6 +68,7 @@ export default function GamesTable({ username }: { username: string }) {
         header: "Moves",
         cell: (info) => <GameMoves moves={info.getValue<number>()} />,
         enableSorting: true,
+        sortingFn: "alphanumeric",
       },
       {
         accessorKey: "rating",
@@ -127,16 +128,6 @@ export default function GamesTable({ username }: { username: string }) {
       return;
     }
   }
-
-  // function handleSortTable({
-  //   id,
-  //   desc,
-  // }: {
-  //   id: "accuracy" | "rating";
-  //   desc: boolean;
-  // }) {
-  //   gamesTable.setSorting([{ id, desc }]);
-  // }
 
   return (
     <>
