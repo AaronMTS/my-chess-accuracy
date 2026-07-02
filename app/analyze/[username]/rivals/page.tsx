@@ -5,7 +5,47 @@ import HeaderEyebrow from "@/components/HeaderEyebrow";
 import RivalSection from "@/components/rivals/RivalSection";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { getArchiveRivalsQueryOptions } from "@/util/query-options";
+import {
+  getArchiveQueryOptions,
+  getRivalQueryOptions,
+} from "@/util/query-options";
+import NoRivalsFallback from "@/components/rivals/NoRivalsFallback";
+import { RivalDetails } from "@/types/rivals";
+
+function Sections({
+  mostDefeated,
+  biggestNemeses,
+}: {
+  mostDefeated: RivalDetails[];
+  biggestNemeses: RivalDetails[];
+}) {
+  if (mostDefeated.length === 0 && biggestNemeses.length === 0) {
+    return <NoRivalsFallback />;
+  }
+
+  return (
+    <>
+      {mostDefeated.length > 0 && (
+        <RivalSection
+          title="Most Defeated"
+          titleColor="text-primary"
+          description="Opponents you currently dominate"
+          rivals={mostDefeated}
+          type="MOST_DEFEATED"
+        />
+      )}
+      {biggestNemeses.length > 0 && (
+        <RivalSection
+          title="Biggest Nemeses"
+          titleColor="text-tertiary"
+          description="Opponents you currently struggle to defeat"
+          rivals={biggestNemeses}
+          type="BIGGEST_NEMESES"
+        />
+      )}
+    </>
+  );
+}
 
 export default function RivalsPage() {
   const params = useParams();
@@ -14,14 +54,17 @@ export default function RivalsPage() {
       ? decodeURIComponent(params.username)
       : "";
 
-  const { data } = useSuspenseQuery(getArchiveRivalsQueryOptions(username));
+  const { data: games } = useSuspenseQuery({
+    ...getArchiveQueryOptions(username),
+    select: (archive) => [
+      ...archive.gamesWithAccuracy,
+      ...archive.gamesWithNoAccuracy,
+    ],
+  });
+  const { data } = useSuspenseQuery(getRivalQueryOptions(username, games));
 
-  const filteredRivals = data.filteredRivals.filter(
-    (rival) => rival.wins + rival.draw + rival.loss >= 15,
-  );
-
-  const mostDefeated = filteredRivals.slice(0, 3);
-  const biggestNemeses = filteredRivals.slice(-3).toReversed();
+  const mostDefeated = data.mostDefeatedArr;
+  const biggestNemeses = data.biggestNemesesArr;
 
   return (
     <>
@@ -41,20 +84,7 @@ export default function RivalsPage() {
           <Swords className="size-42 fill-surfaceBright stroke-surfaceBright opacity-70" />
         </div>
       </section>
-      <RivalSection
-        title="Most Defeated"
-        titleColor="text-primary"
-        description="Opponents who struggle against your tactical patterns"
-        rivals={mostDefeated}
-        type="MOST_DEFEATED"
-      />
-      <RivalSection
-        title="Biggest Nemeses"
-        titleColor="text-tertiary"
-        description="Rivals whose style currently counters yours"
-        rivals={biggestNemeses}
-        type="BIGGEST_NEMESES"
-      />
+      <Sections mostDefeated={mostDefeated} biggestNemeses={biggestNemeses} />
     </>
   );
 }

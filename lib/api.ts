@@ -5,16 +5,17 @@ import { RivalDetails } from "@/types/rivals";
 import mapChessGameToGame, { isDraw, isLoss } from "@/util/chess";
 import { normalizeUsername } from "@/util/strings";
 import { getCleanUsername } from "@/util/validation";
+import { redirect } from "next/navigation";
+
+type ArchivesResponse = {
+  archives: string[];
+};
 
 export const DEFAULT_AVATAR =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuC_OVKPJhu7LHezNYuuEa6Gsef_Vo7fgV8qz4p6KUXYUB_3A45Znbsvs76Nqv8ejTUp0s27OSmz_mXVIP7PF3Nfo1hu5pEJxmtIT8alGz0QVI0g_SIoMVW_XvfGisGpZHFdyxHddoOnNbbHigbEsoy8nr_AOXhIfau3H92tYzAGFaRAsqv-cczcnTgKHmBT6STOCXcKsG6NUs9HTI3hEE-ALVbPPi-A1UhDzyr3WoH9YRjuLqVR40u-6l83EaT-iecOdIATiCzajyc";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "https://api.chess.com/pub/player/";
-
-type ArchivesResponse = {
-  archives: string[];
-};
 
 export async function fetchPlayer(
   username: string,
@@ -71,7 +72,10 @@ export async function fetchPlayer(
   return {
     id: profileData.player_id,
     imageUrl: profileData.avatar || DEFAULT_AVATAR,
-    username: profileData.username || cleanUsername,
+    username:
+      profileData.url.match(/[\w-]+$/)[0] ||
+      profileData.username ||
+      cleanUsername,
     rating: maxRating,
   };
 }
@@ -125,28 +129,44 @@ export async function fetchArchive(
       return [];
     })
     .map((game) => mapChessGameToGame(game, cleanUsername));
+  const gamesWithNoAccuracy: GamesOptionalAccuracy[] = [];
+  const gamesWithAccuracy: Games[] = [];
 
-  const analyzedGames = allGames.filter((game) => Boolean(game.accuracy));
+  allGames.forEach((game) =>
+    game.accuracy
+      ? gamesWithAccuracy.push(game as Games)
+      : gamesWithNoAccuracy.push(game),
+  );
 
   const overallAccuracy =
-    analyzedGames.length > 0
-      ? analyzedGames.reduce((sum, current) => sum + current.accuracy!, 0) /
-        analyzedGames.length
+    gamesWithAccuracy.length > 0
+      ? gamesWithAccuracy.reduce((sum, current) => sum + current.accuracy!, 0) /
+        gamesWithAccuracy.length
       : 0;
-
-  const rivals = fetchPlayerOpponents(allGames);
 
   return {
     accuracy: overallAccuracy,
-    games: analyzedGames as Games[],
-    gamesLength: analyzedGames.length,
-    rivals,
+    gamesWithAccuracy,
+    gamesLength: gamesWithAccuracy.length,
+    gamesWithNoAccuracy,
   };
 }
 
-export function fetchPlayerOpponents(
-  games: GamesOptionalAccuracy[],
-): {totalRivals: number; filteredRivals: RivalDetails[]} {
+export async function fetchPlayerOpponents({
+  games,
+  signal,
+}: {
+  games: GamesOptionalAccuracy[];
+  signal?: AbortSignal;
+}): Promise<{
+  totalRivals: number;
+  mostDefeatedArr: RivalDetails[];
+  biggestNemesesArr: RivalDetails[];
+}> {
+  if (!games) {
+    return redirect(`/analyze`);
+  }
+
   const opponents = new Map<string, RivalDetails>();
 
   for (const game of games) {
@@ -156,31 +176,92 @@ export function fetchPlayerOpponents(
       id: existing?.id ?? 0,
       imageUrl: DEFAULT_AVATAR,
       username: game.opponent,
-      rating: game.rating,
+      rating: existing?.rating ?? 0,
       wins: (existing?.wins ?? 0) + (game.result === "win" ? 1 : 0),
       draw: (existing?.draw ?? 0) + (isDraw(game.result) ? 1 : 0),
       loss: (existing?.loss ?? 0) + (isLoss(game.result) ? 1 : 0),
+      winRate: existing?.winRate ?? 0,
     };
 
     opponents.set(opponentKey, rivalPayload);
   }
 
-  let idCounter = 1;
   const rivals = Array.from(opponents.values());
-  return { totalRivals: rivals.length, filteredRivals: rivals.filter(opponent => opponent.wins + opponent.draw + opponent.loss >=15)
-    .map((opponent) => ({
-      ...opponent,
-      id: opponent.id || idCounter++,
+  const filteredRivals = rivals
+    .filter((rival) => rival.wins + rival.draw + rival.loss >= 15)
+    .map((rival) => ({
+      ...rival,
+      winRate: (rival.wins / (rival.wins + rival.draw + rival.loss)) * 100,
     }))
     .sort((a, b) => {
-      const sortBasis =
-        b.wins / (b.wins + b.loss + b.draw) -
-        a.wins / (a.wins + a.loss + a.draw);
+      const sortBasis = b.winRate - a.winRate;
 
       if (sortBasis === 0) {
         return b.wins - a.wins;
       }
 
       return sortBasis;
-    })};
+    });
+  const topRivals = [
+    ...filteredRivals.slice(0, 3),
+    ...filteredRivals.slice(-3),
+  ];
+
+  const mostDefeated: Record<string, RivalDetails> = {};
+  const biggestNemeses: Record<string, RivalDetails> = {};
+
+  topRivals.forEach((rival) => {
+    const rivalUsername = rival.username;
+
+    if (rival.winRate >= 50) {
+      mostDefeated[rivalUsername] = rival;
+      return;
+    }
+
+    biggestNemeses[rivalUsername] = rival;
+  });
+
+  const results = await Promise.allSettled([
+    ...Object.values(mostDefeated).map((rival) =>
+      fetchPlayer(rival.username, signal),
+    ),
+    ...Object.values(biggestNemeses).map((rival) =>
+      fetchPlayer(rival.username, signal),
+    ),
+  ]);
+
+  results.forEach((result) => {
+    if (result.status === "rejected") {
+      console.log("Failed:", result.reason);
+      return;
+    }
+
+    const currentUsername = result.value.username;
+    const rivalId = result.value.id;
+    const profileImgUrl = result.value.imageUrl;
+    const rivalRating = result.value.rating;
+
+    if (Object.hasOwn(mostDefeated, currentUsername)) {
+      mostDefeated[currentUsername] = {
+        ...mostDefeated[currentUsername],
+        id: rivalId,
+        rating: rivalRating,
+        imageUrl: profileImgUrl,
+      };
+      return;
+    }
+
+    biggestNemeses[currentUsername] = {
+      ...biggestNemeses[currentUsername],
+      id: rivalId,
+      rating: rivalRating,
+      imageUrl: profileImgUrl,
+    };
+  });
+
+  return {
+    totalRivals: opponents.size,
+    mostDefeatedArr: Object.values(mostDefeated),
+    biggestNemesesArr: Object.values(biggestNemeses).toReversed(),
+  };
 }

@@ -35,7 +35,7 @@ export default function GamesTable({ username }: { username: string }) {
     getArchiveQueryOptions(username),
   );
 
-  const { games } = data;
+  const { gamesWithAccuracy: games } = data;
 
   const columns = useMemo<ColumnDef<Games>[]>(
     () => [

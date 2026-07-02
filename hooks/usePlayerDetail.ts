@@ -1,5 +1,4 @@
-import { fetchPlayer } from "@/lib/api";
-import { Player } from "@/types/player";
+import { getProfileQueryOptions } from "@/util/query-options";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 
@@ -12,9 +11,6 @@ export function usePlayerDetails() {
 
   return {
     urlUsername,
-    profileQuery: useSuspenseQuery<Player>({
-      queryKey: ["profile", urlUsername.toLowerCase()],
-      queryFn: ({ signal }) => fetchPlayer(urlUsername, signal),
-    }),
+    profileQuery: useSuspenseQuery(getProfileQueryOptions(urlUsername)),
   };
 }

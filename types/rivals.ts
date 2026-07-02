@@ -6,6 +6,7 @@ export type RivalDetails = {
   wins: number;
   draw: number;
   loss: number;
+  winRate: number;
 };
 
 export type RivalType = "MOST_DEFEATED" | "BIGGEST_NEMESES";

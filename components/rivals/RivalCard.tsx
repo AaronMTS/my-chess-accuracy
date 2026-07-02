@@ -49,9 +49,8 @@ export default function RivalCard({
   rival: RivalDetails;
   index: number;
 }) {
-  const winPercentage = Math.round(
-    (rival.wins / (rival.wins + rival.draw + rival.loss)) * 100,
-  );
+  const roundedWinRate = Math.round(rival.winRate);
+  const clampedWinRate = Math.max(0, Math.min(100, roundedWinRate));
 
   return (
     <div className="space-y-4.5 bg-surfaceHigher p-6 rounded-2xl">
@@ -95,7 +94,7 @@ export default function RivalCard({
               type === "MOST_DEFEATED" ? "text-primary" : "text-error"
             } font-bold tracking-wider`}
           >
-            {winPercentage}%
+            {roundedWinRate}%
           </small>
         </div>
         <div className="rounded-full overflow-hidden h-fit w-full">
@@ -104,27 +103,23 @@ export default function RivalCard({
             viewBox="0 0 100 3"
             preserveAspectRatio="none"
           >
-            <line
-              x1="0"
-              y1="1.5"
-              x2="100"
-              y2="1.5"
-              className="stroke-surfaceLowest"
-              strokeWidth={3}
-              strokeLinecap="round"
+            <rect
+              x="0"
+              y="0"
+              width="100"
+              height="3"
+              rx="1.5"
+              className="fill-surfaceLowest"
             />
-            <line
-              x1="0"
-              y1="1.5"
-              x2="100"
-              y2="1.5"
+            <rect
+              x="0"
+              y="0"
+              width={clampedWinRate}
+              height="3"
+              rx="1.5"
               className={
-                type === "MOST_DEFEATED" ? "stroke-primary" : "stroke-error"
+                type === "MOST_DEFEATED" ? "fill-primary" : "fill-error"
               }
-              strokeWidth={3}
-              strokeDasharray={100}
-              strokeDashoffset={100 - winPercentage}
-              strokeLinecap="round"
             />
           </svg>
         </div>
