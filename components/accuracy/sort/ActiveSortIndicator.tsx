@@ -11,7 +11,7 @@ export default function ActiveSortIndicator({
   const removeSorting = useSortingStore((state) => state.removeSorting);
 
   return (
-    <span className="flex gap-2 items-center p-2 text-[10px] font-heading text-primary font-medium tracking-wider bg-primary/10 border border-primary/20 rounded-md">
+    <span className="flex gap-2 items-center p-2 text-[10px] font-heading text-primary font-medium text-nowrap tracking-wider bg-primary/10 border border-primary/20 rounded-md">
       {sortId.toUpperCase()}: {sortOrder}
       <button className="cursor-pointer" onClick={() => removeSorting()}>
         <X size={13} />

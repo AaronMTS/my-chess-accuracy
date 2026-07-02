@@ -1,6 +1,6 @@
 import { SortingState } from "@tanstack/react-table";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type SortingStore = {
   sortBy: SortingState;
@@ -17,6 +17,9 @@ export const useSortingStore = create<SortingStore>()(
       updateSorting: (id, desc) => set({ sortBy: [{ id, desc }] }),
       removeSorting: () => set({ sortBy: DEFAULT_SORTING }),
     }),
-    { name: "active-sort-options" },
+    {
+      name: "active-sort-options",
+      storage: createJSONStorage(() => sessionStorage),
+    },
   ),
 );

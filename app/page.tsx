@@ -24,11 +24,11 @@ export default function Home() {
             Precision
           </h1>
           <p>
-            The ultimate ledger for serious strategists. Elevate your
-            positioning with high-fidelity performance metrics.
+            The ultimate tool for serious strategists. Elevate your game with
+            high-fidelity performance metrics.
           </p>
         </div>
-        <div className="absolute top-13 right-1/2 translate-x-1/2 rotate-15 h-9/10 aspect-square opacity-15 xs:right-13 xs:translate-x-0 md:opacity-50 lg:h-full">
+        <div className="absolute top-13 right-1/2 translate-x-1/2 rotate-15 h-9/10 aspect-square opacity-15 xxs:right-13 xxs:translate-x-0 md:opacity-50 lg:h-full">
           <svg
             className="size-full"
             viewBox="0 0 500 500"

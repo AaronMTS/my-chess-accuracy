@@ -31,7 +31,8 @@
 
   --font-heading: var(--font-space-grotesk);
 
-  --breakpoint-xs: 420px;
+  --breakpoint-xxs: 420px;
+  --breakpoint-xs: 576px;
 }
 
 @layer base {

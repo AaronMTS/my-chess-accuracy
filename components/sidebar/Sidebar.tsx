@@ -11,6 +11,7 @@ import SidebarBackdrop from "./SidebarBackdrop";
 import { useSidebar } from "@/store/sidebar-context";
 import PlayerInfo from "./PlayerInfo";
 import { Suspense } from "react";
+import PlayerInfoSkeleton from "../skeletons/PlayerInfoSkeleton";
 
 export default function Sidebar() {
   const { isShown } = useSidebar();
@@ -25,7 +26,7 @@ export default function Sidebar() {
         className={`${SIDEBAR_MOBILE_CLASSES} shrink-0 w-71 flex flex-col gap-16 justify-between py-8 md:w-16 lg:w-52 font-heading max-md:bg-surface max-md:h-dvh md:static md:opacity-100`}
       >
         <div className="space-y-8">
-          <Suspense fallback={<p>Loading</p>}>
+          <Suspense fallback={<PlayerInfoSkeleton />}>
             <PlayerInfo />
           </Suspense>
           <nav className="space-y-1 text-onSurface pr-1 md:max-lg:pl-1">
