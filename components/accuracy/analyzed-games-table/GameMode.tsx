@@ -1,9 +1,10 @@
-import { Gauge, Timer, Zap } from "lucide-react";
+import { Gauge, Sun, Timer, Zap } from "lucide-react";
 
 const MODE_ICONS: Record<string, React.ReactNode> = {
   rapid: <Timer className="shrink-0" size={10.5} />,
   blitz: <Zap className="shrink-0" size={10.5} />,
   bullet: <Gauge className="shrink-0" size={10.5} />,
+  daily: <Sun className="shrink-0" size={10.5} />,
 };
 
 export default function GameMode({ mode }: { mode: string }) {

@@ -10,7 +10,7 @@ export type Games = {
   accuracy: number;
   opponent: string;
   color: string;
-  mode: string;
+  mode: "bullet" | "blitz" | "rapid" | "daily" | "unknown";
   date: string;
   moves: number | "N/A";
   rating: number;

@@ -38,13 +38,13 @@ export function parsePgnTags(pgn: string) {
 }
 
 export function parseDateFromPgn(pgn: string, game: ChessGame) {
+  if (typeof game.end_time === "number") {
+    return new Date(game.end_time * 1000).toISOString().split("T")[0];
+  }
+
   const tags = parsePgnTags(pgn);
   if (tags.Date) {
     return tags.Date.replace(/\./g, "-");
-  }
-
-  if (typeof game.end_time === "number") {
-    return new Date(game.end_time * 1000).toISOString().split("T")[0];
   }
 
   return "";
@@ -55,8 +55,14 @@ export function parseMoveCount(pgn: string) {
     return undefined;
   }
 
-  const lastMoveRegex =
+  let lastMoveRegex =
     /\d+\.{1,3}\s[\w\d+#=-]+\s{\[%clk\s[\d:\.]+\]}\s(?:1|0|1\/2)-(?:1|0|1\/2)/;
+
+  if (!/%clk/.test(pgn)) {
+    lastMoveRegex =
+      /\d+\.\s[A-Za-z0-9=-]+[+#]?\s?[A-Za-z0-9=-]+?[+#]?\s(?:1|0|1\/2)-(?:1|0|1\/2)/;
+  }
+
   const lastMove = pgn.match(lastMoveRegex);
 
   if (lastMove) {
@@ -78,12 +84,18 @@ export default function mapChessGameToGame<
     playerColor === "white" ? game.white.result : game.black.result
   ) as ChessResult;
   const tags = parsePgnTags(game.pgn);
+  const rawMode = game.time_class || tags.Event || "unknown";
+  const mode: Games["mode"] = ["bullet", "blitz", "rapid", "daily"].includes(
+    rawMode,
+  )
+    ? (rawMode as Games["mode"])
+    : "unknown";
 
   const gameObj: GamesOptionalAccuracy = {
     id: game.uuid,
     opponent,
     color: playerColor,
-    mode: game.time_class || tags.Event || "unknown",
+    mode,
     date: parseDateFromPgn(game.pgn, game),
     moves: parseMoveCount(game.pgn) || "N/A",
     rating,
