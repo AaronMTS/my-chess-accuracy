@@ -8,8 +8,10 @@ export default async function AccuracyPage({
 }: {
   params: Promise<{ username: string }>;
 }) {
-  const { username } = await params;
-  const cleanUsername = getCleanUsername(username);
+  const { username: rawUsername } = await params;
+  const decodedUsername =
+    typeof rawUsername === "string" ? decodeURIComponent(rawUsername) : "";
+  const cleanUsername = getCleanUsername(decodedUsername);
 
   if (!cleanUsername) {
     redirect(`analyze`);

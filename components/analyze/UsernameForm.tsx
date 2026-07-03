@@ -16,8 +16,8 @@ export default function UsernameForm() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const username = String(formData.get("username") ?? "");
-    const cleanUsername = getCleanUsername(username);
+    const rawUsername = String(formData.get("username") ?? "");
+    const cleanUsername = getCleanUsername(rawUsername);
 
     if (!cleanUsername) {
       animate("div", {
@@ -28,7 +28,7 @@ export default function UsernameForm() {
       return;
     }
 
-    router.push(`analyze/${cleanUsername}/accuracy`);
+    router.push(`analyze/${encodeURIComponent(cleanUsername)}/accuracy`);
   }
 
   return (

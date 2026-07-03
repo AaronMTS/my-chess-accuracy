@@ -24,11 +24,11 @@ export async function fetchPlayer(
   const cleanUsername = getCleanUsername(username);
 
   if (!cleanUsername) {
-    throw new Error("Username cannot be empty");
+    throw new Error("Invalid username");
   }
 
-  const profileUrl = `${BASE_URL}${cleanUsername}`;
-  const statsUrl = `${BASE_URL}${cleanUsername}/stats`;
+  const profileUrl = `${BASE_URL}${encodeURIComponent(cleanUsername)}`;
+  const statsUrl = `${BASE_URL}${encodeURIComponent(cleanUsername)}/stats`;
 
   const [profileRes, statsRes] = await Promise.all([
     fetch(profileUrl, { signal }),
@@ -87,10 +87,10 @@ export async function fetchArchive(
   const cleanUsername = getCleanUsername(username);
 
   if (!cleanUsername) {
-    throw new Error("Username cannot be empty");
+    throw new Error("Invalid username");
   }
 
-  const archivesUrl = `${BASE_URL}${cleanUsername}/games/archives`;
+  const archivesUrl = `${BASE_URL}${encodeURIComponent(cleanUsername)}/games/archives`;
   const archivesRes = await fetch(archivesUrl, { signal });
 
   if (!archivesRes.ok) {
