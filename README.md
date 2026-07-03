@@ -6,7 +6,7 @@ Features:
 3. Show their 3 most defeated players.
 4. Show the top 3 players who defeated them the most.
 
-Planned additions:
+To be added soon:
 - Add a search functionality to the Analyzed Games table
 - Compute the rating change for each analyzed game.
-- Allow the Analyzed Games table to be sorted.
+- Add links to each chess game.
