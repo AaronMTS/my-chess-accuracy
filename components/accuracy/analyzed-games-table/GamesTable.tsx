@@ -26,6 +26,7 @@ import GamesTableHeader from "./GamesTableHeader";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getArchiveQueryOptions } from "@/util/query-options";
 import { useSortingStore } from "@/store/table-sort";
+import { getUserFacingErrorMessage } from "@/util/errors";
 
 const DATE_ADDITIONAL_CLASSES = "text-xs text-onSurfaceLow font-semibold";
 
@@ -106,9 +107,10 @@ export default function GamesTable({ username }: { username: string }) {
 
   if (isError) {
     return (
-      <p className="text-center">
-        {error.message || "Something went wrong. Please try again later."}
-      </p>
+      <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center text-red-200">
+        <p className="font-semibold">We couldn’t load the analyzed games.</p>
+        <p className="mt-2 text-sm">{getUserFacingErrorMessage(error)}</p>
+      </div>
     );
   }
 

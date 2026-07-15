@@ -11,6 +11,7 @@ import {
 } from "@/util/query-options";
 import NoRivalsFallback from "@/components/rivals/NoRivalsFallback";
 import { RivalDetails } from "@/types/rivals";
+import { getUserFacingErrorMessage } from "@/util/errors";
 
 function Sections({
   mostDefeated,
@@ -54,17 +55,30 @@ export default function RivalsPage() {
       ? decodeURIComponent(params.username)
       : "";
 
-  const { data: games } = useSuspenseQuery({
+  const { data: games, error: archiveError } = useSuspenseQuery({
     ...getArchiveQueryOptions(username),
     select: (archive) => [
       ...archive.gamesWithAccuracy,
       ...archive.gamesWithNoAccuracy,
     ],
   });
-  const { data } = useSuspenseQuery(getRivalQueryOptions(username, games));
+  const { data, error: rivalError } = useSuspenseQuery(
+    getRivalQueryOptions(username, games),
+  );
 
   const mostDefeated = data.mostDefeatedArr;
   const biggestNemeses = data.biggestNemesesArr;
+
+  if (archiveError || rivalError) {
+    return (
+      <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center text-red-200">
+        <p className="font-semibold">We couldn’t load the rival analysis.</p>
+        <p className="mt-2 text-sm">
+          {getUserFacingErrorMessage(archiveError ?? rivalError)}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>

@@ -6,6 +6,7 @@ import mapChessGameToGame, { isDraw, isLoss } from "@/util/chess";
 import { normalizeUsername } from "@/util/strings";
 import { getCleanUsername } from "@/util/validation";
 import { redirect } from "next/navigation";
+import { UserFacingError } from "@/util/errors";
 
 type ArchivesResponse = {
   archives: string[];
@@ -24,7 +25,10 @@ export async function fetchPlayer(
   const cleanUsername = getCleanUsername(username);
 
   if (!cleanUsername) {
-    throw new Error("Invalid username");
+    throw new UserFacingError(
+      "Please enter a valid Chess.com username to analyze your games.",
+      { code: "invalid_username" },
+    );
   }
 
   const profileUrl = `${BASE_URL}${encodeURIComponent(cleanUsername)}`;
@@ -37,13 +41,23 @@ export async function fetchPlayer(
 
   if (!profileRes.ok) {
     if (profileRes.status === 404) {
-      throw new Error("Player not found");
+      throw new UserFacingError(
+        "We couldn't find a Chess.com account with that username.",
+        { status: 404, code: "player_not_found" },
+      );
     }
-    throw new Error(`Failed to fetch player profile: ${profileRes.statusText}`);
+
+    throw new UserFacingError(
+      "We couldn't load that Chess.com profile right now. Please try again in a moment.",
+      { status: profileRes.status, code: "profile_fetch_failed" },
+    );
   }
 
   if (!statsRes.ok) {
-    throw new Error(`Failed to fetch player stats: ${statsRes.statusText}`);
+    throw new UserFacingError(
+      "We couldn't load the player statistics right now. Please try again in a moment.",
+      { status: statsRes.status, code: "stats_fetch_failed" },
+    );
   }
 
   const profileData = await profileRes.json();
@@ -87,15 +101,19 @@ export async function fetchArchive(
   const cleanUsername = getCleanUsername(username);
 
   if (!cleanUsername) {
-    throw new Error("Invalid username");
+    throw new UserFacingError(
+      "Please enter a valid Chess.com username to analyze your games.",
+      { code: "invalid_username" },
+    );
   }
 
   const archivesUrl = `${BASE_URL}${encodeURIComponent(cleanUsername)}/games/archives`;
   const archivesRes = await fetch(archivesUrl, { signal });
 
   if (!archivesRes.ok) {
-    throw new Error(
-      `Failed to fetch player game archives: ${archivesRes.statusText}`,
+    throw new UserFacingError(
+      "We couldn't load the game archive for that account. Please try again in a moment.",
+      { status: archivesRes.status, code: "archives_fetch_failed" },
     );
   }
 

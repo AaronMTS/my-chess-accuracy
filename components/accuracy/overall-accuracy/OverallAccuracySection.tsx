@@ -6,6 +6,7 @@ import OverallAccuracyIndicator from "./OverallAccuracyIndicator";
 import OverallAccuracy from "./OverallAccuracy";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getArchiveQueryOptions } from "@/util/query-options";
+import { getUserFacingErrorMessage } from "@/util/errors";
 
 export default function OverallAccuracySection({
   username,
@@ -17,7 +18,12 @@ export default function OverallAccuracySection({
   );
 
   if (isError) {
-    return <p className="text-center">{error.message}</p>;
+    return (
+      <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center text-red-200">
+        <p className="font-semibold">We couldn’t load the accuracy summary.</p>
+        <p className="mt-2 text-sm">{getUserFacingErrorMessage(error)}</p>
+      </div>
+    );
   }
 
   return (
