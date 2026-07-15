@@ -1,7 +1,6 @@
 import OverallAccuracySection from "@/components/accuracy/overall-accuracy/OverallAccuracySection";
 import GamesTable from "@/components/accuracy/analyzed-games-table/GamesTable";
 import { getCleanUsername } from "@/util/validation";
-import { redirect } from "next/navigation";
 
 export default async function AccuracyPage({
   params,
@@ -13,15 +12,11 @@ export default async function AccuracyPage({
     typeof rawUsername === "string" ? decodeURIComponent(rawUsername) : "";
   const cleanUsername = getCleanUsername(decodedUsername);
 
-  if (!cleanUsername) {
-    redirect(`analyze`);
-  }
-
   return (
     <>
-      <OverallAccuracySection username={cleanUsername} />
+      <OverallAccuracySection username={cleanUsername!} />
       <section className="bg-surface flex flex-col rounded-lg overflow-hidden">
-        <GamesTable username={cleanUsername} />
+        <GamesTable username={cleanUsername!} />
       </section>
     </>
   );

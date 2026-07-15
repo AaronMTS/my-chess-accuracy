@@ -3,10 +3,10 @@ import { DEFAULT_AVATAR } from "@/lib/api";
 import Image from "next/image";
 
 export default function PlayerInfo() {
-  const { urlUsername, profileQuery } = usePlayerDetails();
+  const { cleanUsername, profileQuery } = usePlayerDetails();
   const { data: player } = profileQuery;
 
-  const displayUsername = player?.username || urlUsername || "User";
+  const displayUsername = player?.username || cleanUsername || "User";
   const displayAvatar = player?.imageUrl || DEFAULT_AVATAR;
   const displayRating = player ? `${player.rating} ELO` : "Loading ELO...";
 

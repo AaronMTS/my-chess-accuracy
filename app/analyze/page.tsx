@@ -8,7 +8,7 @@ export default function AnalyzePage() {
   return (
     <main className="flex flex-col gap-3 h-dvh">
       <Navbar hasSidebarBtn={false} />
-      <section className="space-y-6 grow p-8 mx-auto max-w-lg text-center md:mt-6">
+      <section className="space-y-6 grow p-8 mx-auto w-full max-w-md text-center md:mt-6">
         <div className="space-y-3">
           <h2 className="font-heading">Initialize Analysis</h2>
           <p className="text-slate-400 text-sm">
