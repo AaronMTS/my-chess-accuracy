@@ -1,5 +1,3 @@
-"use client";
-
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/Footer";
 import UsernameForm from "@/components/analyze/UsernameForm";
