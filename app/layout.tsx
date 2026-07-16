@@ -4,8 +4,9 @@ import { manrope, spaceGrotesk } from "./fonts";
 import ClientSideProvider from "../providers/ClientProviders";
 
 export const metadata: Metadata = {
-  title: "MyChessAccuracy",
-  description: "View the overall accuracy of your chess games and more.",
+  title: "MyChessAccuracy | Overall Accuracy & Top 3 Rivals",
+  description:
+    "See your overall accuracy and identify your biggest rivals by analyzing your chess games—for free. No sign-up required.",
 };
 
 export default function RootLayout({

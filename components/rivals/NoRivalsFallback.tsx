@@ -11,8 +11,9 @@ export default function NoRivalsFallback() {
       </h3>
       <p className="relative z-10 mb-0 text-onSurfaceLow leading-relaxed max-w-lg">
         Play at least{" "}
-        <span className="text-primary font-semibold">15 matches</span> against
-        an opponent to view your most defeated players and biggest nemeses.
+        <span className="text-primary font-semibold">15 games</span> against the
+        same opponent to see who you beat most often and who gives you the most
+        trouble.
       </p>
       <Trophy
         size={172}

@@ -3,6 +3,12 @@
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/Footer";
 import UsernameForm from "@/components/analyze/UsernameForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "MyChessAccuracy | Analyze",
+  description: "Enter your account name to start the analysis.",
+};
 
 export default function AnalyzePage() {
   return (

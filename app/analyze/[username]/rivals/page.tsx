@@ -12,6 +12,12 @@ import {
 import NoRivalsFallback from "@/components/rivals/NoRivalsFallback";
 import { RivalDetails } from "@/types/rivals";
 import { getUserFacingErrorMessage } from "@/util/errors";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "MyChessAccuracy | Rivals",
+  description: "Discover your easiest and toughest opponents.",
+};
 
 function Sections({
   mostDefeated,
