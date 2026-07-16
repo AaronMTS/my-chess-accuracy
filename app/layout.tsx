@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import "./globals.css";
 import { manrope, spaceGrotesk } from "./fonts";
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="min-h-dvh flex flex-col overflow-hidden">
         <div id="modal_root"></div>
         <ClientSideProvider>{children}</ClientSideProvider>
+        <Analytics />
       </body>
     </html>
   );
