@@ -1,7 +1,6 @@
 "use client";
 
 import { Swords } from "lucide-react";
-import HeaderEyebrow from "@/components/HeaderEyebrow";
 import RivalSection from "@/components/rivals/RivalSection";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -84,14 +83,13 @@ export default function RivalsMainWrapper() {
     <>
       <section className="relative p-8 flex gap-12 justify-between bg-surfaceLow rounded-2xl">
         <header className="relative z-10 space-y-4 lg:w-3/4">
-          <HeaderEyebrow>Competitive Landscape</HeaderEyebrow>
           <h1 className="font-heading">
             Your Strategic <em className="text-primary">Nemesis</em> Map
           </h1>
           <p>
-            Analyzing {data.totalRivals} unique opponents from all of your
-            games. View a tactical breakdown of performance against your top
-            competitors.
+            Analyzing {data.totalRivals.toLocaleString()} opponents from all of
+            your games. View a tactical breakdown of performance against your
+            top competitors.
           </p>
         </header>
         <div className="absolute top-0 right-0 p-8 size-fit flex justify-center items-center">

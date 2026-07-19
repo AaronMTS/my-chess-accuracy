@@ -29,7 +29,7 @@ function ErrorFallback(
 
   let ctaButtonHandler = unstable_retry;
 
-  if (error.code === "invalid_username") {
+  if (error.code === "invalid_username" || error.code === "player_not_found") {
     ctaButtonHandler = () => router.push("/analyze");
   }
 
@@ -38,7 +38,7 @@ function ErrorFallback(
   }
 
   return (
-    <section className="space-y-12 w-full text-center mx-auto py-14 px-6 md:py-18 lg:py-22 *:mx-auto">
+    <section className="space-y-12 w-full text-center mx-auto py-14 px-6 overflow-hidden md:py-18 lg:py-22 *:mx-auto">
       <div className="relative size-32 grid place-content-center bg-center bg-size-[32px_32px] bg-error-grid-gradient border-2 border-error/30 overflow-visible">
         <RadioOff size={48} className="text-error animate-pulse" />{" "}
         <CornerSVG className="absolute size-3 -top-1 -left-1 text-error" />
@@ -67,7 +67,7 @@ function ErrorFallback(
         <CtaButton
           onClick={ctaButtonHandler}
           withIcon={true}
-          paddingClasses="px-8 py-4"
+          paddingClasses="pl-7.5 pr-8 py-4"
         >
           {ButtonIcon && <ButtonIcon size={20} />}
           {!ButtonIcon && <RefreshCw size={20} />}
@@ -77,7 +77,7 @@ function ErrorFallback(
         </CtaButton>
         <button
           onClick={backToHomeHandler}
-          className="flex gap-2.5 px-8 py-4 justify-center items-center text-primary text-lg font-heading font-bold tracking-wider text-nowrap outline outline-primary/50 rounded-md cursor-pointer"
+          className="flex gap-2.5 pl-7 pr-8 py-4 justify-center items-center text-primary text-lg font-heading font-bold tracking-wider text-nowrap outline outline-primary/50 rounded-md cursor-pointer"
         >
           <ArrowLeft size={20} />
           BACK TO HOME

@@ -56,7 +56,7 @@ export const errorTypesUI: Record<
       </>
     ),
     bgText: "MISSING",
-    button: { text: "SEARCH AGAIN", Icon: Search },
+    button: { text: "TRY ANOTHER USERNAME", Icon: Search },
   },
   profile_fetch_failed: {
     Title: (

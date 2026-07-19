@@ -20,7 +20,7 @@ export default function RootLayout({
       lang="en"
       className={`${manrope.className} ${spaceGrotesk.variable} bg-surface text-onSurface antialiased`}
     >
-      <body className="min-h-dvh flex flex-col overflow-hidden">
+      <body className="min-h-dvh flex flex-col">
         <div id="modal_root"></div>
         <ClientSideProvider>{children}</ClientSideProvider>
         <Analytics />

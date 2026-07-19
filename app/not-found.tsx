@@ -6,8 +6,7 @@ import CtaButton from "@/components/buttons/CtaButton";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/navbar/Navbar";
-import TertiaryHeaderEyebrow from "@/components/TertiaryHeaderEyebrow";
-import { ArrowLeft, ArrowRight, Info } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function RootPageNotFound() {
   const router = useRouter();
@@ -16,16 +15,13 @@ export default function RootPageNotFound() {
     <>
       <Navbar hasSidebarBtn={false} />
       <div className="grow px-8 py-12">
-        <section className="space-y-10 relative max-w-xl mx-auto px-8 pt-16 pb-8 bg-surfaceLow rounded-lg">
+        <section className="space-y-10 relative max-w-xl mx-auto px-8 pt-12 pb-8 bg-surfaceLow rounded-lg">
           <p
             className={`absolute top-8 right-8 text-8xl font-heading text-primary font-semibold tracking-tight opacity-20`}
           >
             404
           </p>
           <div className="space-y-4 relative z-10">
-            <TertiaryHeaderEyebrow icon={Info}>
-              Out of Bounds
-            </TertiaryHeaderEyebrow>
             <h1>
               Position <em className="text-primary">Lost</em>
             </h1>
