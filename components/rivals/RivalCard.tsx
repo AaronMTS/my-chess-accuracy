@@ -75,7 +75,7 @@ export default function RivalCard({
               type === "BIGGEST_NEMESES" ? "text-error" : ""
             } text-xs font-mono tracking-wide rounded-sm`}
           >
-            {rival.rating} ELO
+            {rival.rating || "UNKNOWN"} ELO
           </small>
         </span>
         <span>
@@ -136,6 +136,10 @@ export default function RivalCard({
           withTextColor={type === "BIGGEST_NEMESES"}
         />
       </div>
+      <p className="text-xs text-slate-400 text-center">
+        <span className="font-medium">Draws:</span>{" "}
+        <span className="font-bold">{rival.draw}</span>
+      </p>
     </div>
   );
 }

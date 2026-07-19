@@ -7,6 +7,7 @@ import { normalizeUsername } from "@/util/strings";
 import { getCleanUsername } from "@/util/validation";
 import { redirect } from "next/navigation";
 import { UserFacingError } from "@/util/errors";
+import { generateSafeIntegerID } from "@/util/numbers";
 
 type ArchivesResponse = {
   archives: string[];
@@ -191,7 +192,7 @@ export async function fetchPlayerOpponents({
     const opponentKey = normalizeUsername(game.opponent);
     const existing = opponents.get(opponentKey);
     const rivalPayload: RivalDetails = {
-      id: existing?.id ?? 0,
+      id: existing?.id ?? generateSafeIntegerID(),
       imageUrl: DEFAULT_AVATAR,
       username: game.opponent,
       rating: existing?.rating ?? 0,

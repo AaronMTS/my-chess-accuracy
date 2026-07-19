@@ -82,18 +82,24 @@ export default function RivalsMainWrapper() {
   return (
     <>
       <section className="relative p-8 flex gap-12 justify-between bg-surfaceLow rounded-2xl">
-        <header className="relative z-10 space-y-4 lg:w-3/4">
+        <header className="relative z-10 space-y-4 lg:w-9/10">
           <h1 className="font-heading">
-            Your Strategic <em className="text-primary">Nemesis</em> Map
+            Your Strategic{" "}
+            <span className="text-nowrap">
+              <em className="text-primary">Nemesis</em> Map
+            </span>
           </h1>
-          <p>
-            Analyzing {data.totalRivals.toLocaleString()} opponents from all of
-            your games. View a tactical breakdown of performance against your
-            top competitors.
+          <p className="max-w-187.5">
+            Analyzing{" "}
+            <span className="text-primary">
+              {data.totalRivals.toLocaleString()}
+            </span>{" "}
+            opponents from all of your games. View a tactical breakdown of
+            performance against your top competitors.
           </p>
         </header>
-        <div className="absolute top-0 right-0 p-8 size-fit flex justify-center items-center">
-          <Swords className="size-42 fill-surfaceBright stroke-surfaceBright opacity-70" />
+        <div className="absolute top-1/2 right-4 -translate-y-1/2 h-full min-h-42 w-auto aspect-square p-4">
+          <Swords className="size-full fill-surfaceBright stroke-surfaceBright opacity-70" />
         </div>
       </section>
       <Sections mostDefeated={mostDefeated} biggestNemeses={biggestNemeses} />
