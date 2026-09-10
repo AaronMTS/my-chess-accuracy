@@ -20,10 +20,6 @@ export default function SidebarContextProvider({
     setIsShown((prevValue) => (prevValue !== newValue ? newValue : prevValue));
   }, []);
 
-  // function toggle(newValue: boolean) {
-  //   setIsShown((prevValue) => (prevValue !== newValue ? newValue : prevValue));
-  // }
-
   const ctxValue = { isShown, toggle };
 
   return (

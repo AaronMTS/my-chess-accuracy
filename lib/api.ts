@@ -197,8 +197,8 @@ export async function fetchPlayerOpponents({
       username: game.opponent,
       rating: existing?.rating ?? 0,
       wins: (existing?.wins ?? 0) + (game.result === "win" ? 1 : 0),
-      draw: (existing?.draw ?? 0) + (isDraw(game.result) ? 1 : 0),
-      loss: (existing?.loss ?? 0) + (isLoss(game.result) ? 1 : 0),
+      draw: (existing?.draw ?? 0) + (isDraw(game.result!) ? 1 : 0),
+      loss: (existing?.loss ?? 0) + (isLoss(game.result!) ? 1 : 0),
       winRate: existing?.winRate ?? 0,
     };
 

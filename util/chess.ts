@@ -59,10 +59,6 @@ export function parseMoveCount(pgn: string) {
 }
 
 function parseWinner(pgn: string): "white" | "black" | null | undefined {
-  // if (/\[Black "KomodoChess"]\\n\[Result "1\/2\-1\/2"]/.test(pgn)) {
-  //   console.log(pgn);
-  // }
-
   if (!pgn) return undefined;
 
   const resultString = pgn.match(/Result\s"(?:1|0|1\/2)-(?:1|0|1\/2)"/);
@@ -87,10 +83,6 @@ export default function mapChessGameToGame<
   const normalizedUsername = normalizeUsername(username);
   const whiteName = normalizeUsername(game.white.username);
   const playerColor = whiteName === normalizedUsername ? "white" : "black";
-
-  if (game.end_time === 1452102080) {
-    console.log(game.pgn);
-  }
 
   const winner = parseWinner(game.pgn);
 
