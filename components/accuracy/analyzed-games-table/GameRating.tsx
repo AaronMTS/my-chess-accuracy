@@ -1,4 +1,4 @@
-import { ChessResult } from "@/types/games";
+import { Games } from "@/types/games";
 import { isDraw, isLoss } from "@/util/chess";
 import { ArrowDown, ArrowUp, Equal } from "lucide-react";
 
@@ -15,13 +15,18 @@ export default function GameRating({
   result,
 }: {
   rating: number;
-  result: ChessResult;
+  result: Games["result"];
 }) {
-  let mappedResult: keyof typeof RATING_CHANGE_ICONS = "win";
-  if (isDraw(result)) {
-    mappedResult = "draw";
-  } else if (isLoss(result)) {
-    mappedResult = "loss";
+  let mappedResult: keyof typeof RATING_CHANGE_ICONS | undefined;
+
+  if (result) {
+    mappedResult = "win";
+
+    if (isDraw(result)) {
+      mappedResult = "draw";
+    } else if (isLoss(result)) {
+      mappedResult = "loss";
+    }
   }
 
   return (
@@ -29,7 +34,7 @@ export default function GameRating({
       <span className={`font-heading text-sm font-bold tabular-nums`}>
         {rating}
       </span>
-      {RATING_CHANGE_ICONS[mappedResult]}
+      {mappedResult && RATING_CHANGE_ICONS[mappedResult]}
     </div>
   );
 }

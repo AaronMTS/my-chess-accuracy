@@ -2,6 +2,7 @@ import OverallAccuracySection from "@/components/accuracy/overall-accuracy/Overa
 import GamesTable from "@/components/accuracy/analyzed-games-table/GamesTable";
 import { getCleanUsername } from "@/util/validation";
 import { Metadata } from "next";
+import BestGamesMainWrapper from "@/components/accuracy/best-games/MainWrapper";
 
 export const metadata: Metadata = {
   title: "MyChessAccuracy | Accuracy",
@@ -21,6 +22,7 @@ export default async function AccuracyPage({
   return (
     <>
       <OverallAccuracySection username={cleanUsername!} />
+      <BestGamesMainWrapper username={cleanUsername!} />
       <section className="bg-surface flex flex-col rounded-lg overflow-hidden">
         <GamesTable username={cleanUsername!} />
       </section>

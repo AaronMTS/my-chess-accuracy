@@ -1,20 +1,45 @@
-import { drawResults, losingResults } from "@/util/chess";
+export type MainChessResults = "win" | "draw" | "lost";
 
-export type ChessResult =
-  | (typeof drawResults)[number]
-  | (typeof losingResults)[number]
-  | "win";
+export const drawResultsReason = [
+  "agreed",
+  "repetition",
+  "stalemate",
+  "insufficient",
+  "timevsinsufficient",
+  "50move",
+] as const;
+
+export const losingResultsReason = [
+  "checkmated",
+  "resigned",
+  "timeout",
+  "abandoned",
+  "lose",
+  "loss",
+] as const;
+
+export type CombinedChessResults =
+  | (typeof drawResultsReason)[number]
+  | (typeof losingResultsReason)[number];
 
 export type Games = {
   id: string | number;
+  url: string;
   accuracy: number;
   opponent: string;
   color: string;
   mode: "bullet" | "blitz" | "rapid" | "daily" | "unknown";
   date: string;
-  moves: number | "N/A";
-  rating: number;
-  result: ChessResult;
+  moves: number | null;
+  playerRating: number;
+  opponentRating: number;
+  result: MainChessResults | undefined;
+  resultReason: CombinedChessResults | undefined;
+};
+
+export type GamesWithFinalScore = Games & {
+  finalScore: number;
+  ratingDiff: number;
 };
 
 export type GamesOptionalId = Omit<Games, "id"> & {

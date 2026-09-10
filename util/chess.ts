@@ -1,29 +1,17 @@
-import { ChessResult, Games, GamesOptionalAccuracy } from "@/types/games";
+import {
+  CombinedChessResults,
+  drawResultsReason,
+  Games,
+  GamesOptionalAccuracy,
+  losingResultsReason,
+} from "@/types/games";
 import type { ReturnedGame as ChessGame } from "@/types/returnedGames";
 import { normalizeUsername } from "./strings";
 
-export const drawResults = [
-  "agreed",
-  "repetition",
-  "stalemate",
-  "insufficient",
-  "timevsinsufficient",
-  "50move",
-] as const;
-
-export const losingResults = [
-  "checkmated",
-  "resigned",
-  "timeout",
-  "abandoned",
-  "lose",
-  "loss",
-] as const;
-
 export const isDraw = (result: string) =>
-  (drawResults as readonly string[]).includes(result);
+  ([...drawResultsReason, "draw"] as readonly string[]).includes(result);
 export const isLoss = (result: string) =>
-  (losingResults as readonly string[]).includes(result);
+  ([...losingResultsReason, "lost"] as readonly string[]).includes(result);
 
 export function parsePgnTags(pgn: string) {
   const tags: Record<string, string> = {};
@@ -70,19 +58,77 @@ export function parseMoveCount(pgn: string) {
   }
 }
 
+function parseWinner(pgn: string): "white" | "black" | null | undefined {
+  // if (/\[Black "KomodoChess"]\\n\[Result "1\/2\-1\/2"]/.test(pgn)) {
+  //   console.log(pgn);
+  // }
+
+  if (!pgn) return undefined;
+
+  const resultString = pgn.match(/Result\s"(?:1|0|1\/2)-(?:1|0|1\/2)"/);
+  const whiteWonRegex = /1-0/;
+  const blackWonRegex = /0-1/;
+  const drawRegex = /1\/2-1\/2/;
+
+  if (!resultString) return undefined;
+
+  if (whiteWonRegex.test(resultString![0])) return "white";
+
+  if (blackWonRegex.test(resultString![0])) return "black";
+
+  if (drawRegex.test(resultString![0])) return null;
+}
+
 export default function mapChessGameToGame<
   T extends Games | GamesOptionalAccuracy = GamesOptionalAccuracy,
 >(game: ChessGame, username: string): T {
+  const gameUrl = game.url;
+
   const normalizedUsername = normalizeUsername(username);
   const whiteName = normalizeUsername(game.white.username);
   const playerColor = whiteName === normalizedUsername ? "white" : "black";
-  const opponent =
-    playerColor === "white" ? game.black.username : game.white.username;
-  const rating =
-    playerColor === "white" ? game.white.rating : game.black.rating;
-  const result = (
-    playerColor === "white" ? game.white.result : game.black.result
-  ) as ChessResult;
+
+  if (game.end_time === 1452102080) {
+    console.log(game.pgn);
+  }
+
+  const winner = parseWinner(game.pgn);
+
+  let opponent;
+  let playerRating;
+  let opponentRating;
+  let result: Games["result"] = undefined;
+  let resultReason: Games["resultReason"] = undefined;
+
+  if (winner === null) {
+    result = "draw";
+    resultReason = game.white.result as CombinedChessResults;
+  }
+
+  if (playerColor === "white") {
+    opponent = game.black.username;
+    playerRating = game.white.rating;
+    opponentRating = game.black.rating;
+    if (winner !== null) {
+      result = winner === "white" ? "win" : "lost";
+      resultReason =
+        winner === "white"
+          ? (game.black.result as CombinedChessResults)
+          : (game.white.result as CombinedChessResults);
+    }
+  } else {
+    opponent = game.white.username;
+    playerRating = game.black.rating;
+    opponentRating = game.white.rating;
+    if (winner !== null) {
+      result = winner === "black" ? "win" : "lost";
+      resultReason =
+        winner === "black"
+          ? (game.white.result as CombinedChessResults)
+          : (game.black.result as CombinedChessResults);
+    }
+  }
+
   const tags = parsePgnTags(game.pgn);
   const rawMode = game.time_class || tags.Event || "unknown";
   const mode: Games["mode"] = ["bullet", "blitz", "rapid", "daily"].includes(
@@ -93,13 +139,16 @@ export default function mapChessGameToGame<
 
   const gameObj: GamesOptionalAccuracy = {
     id: game.uuid,
+    url: gameUrl,
     opponent,
     color: playerColor,
     mode,
     date: parseDateFromPgn(game.pgn, game),
-    moves: parseMoveCount(game.pgn) || "N/A",
-    rating,
+    moves: parseMoveCount(game.pgn) || null,
+    playerRating,
+    opponentRating,
     result,
+    resultReason,
   };
 
   if (game.accuracies) {

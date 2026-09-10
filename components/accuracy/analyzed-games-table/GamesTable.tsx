@@ -27,6 +27,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getArchiveQueryOptions } from "@/util/query-options";
 import { useSortingStore } from "@/store/table-sort";
 import { getUserFacingErrorMessage } from "@/util/errors";
+import { formatDate } from "@/util/date";
 
 const DATE_ADDITIONAL_CLASSES = "text-xs text-onSurfaceLow font-semibold";
 
@@ -63,16 +64,20 @@ export default function GamesTable({ username }: { username: string }) {
         header: "Mode",
         cell: (info) => <GameMode mode={info.getValue<string>()} />,
       },
-      { accessorKey: "date", header: "Date", cell: (info) => info.getValue() },
+      {
+        accessorKey: "date",
+        header: "Date",
+        cell: (info) => formatDate(new Date(info.getValue() as string)),
+      },
       {
         accessorKey: "moves",
-        header: "Moves",
-        cell: (info) => <GameMoves moves={info.getValue<number>()} />,
+        header: "Length",
+        cell: (info) => <GameMoves moves={info.getValue<number | null>()} />,
         enableSorting: true,
         sortingFn: "alphanumeric",
       },
       {
-        accessorKey: "rating",
+        accessorKey: "playerRating",
         header: "Rating",
         cell: (info) => (
           <GameRating

@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 type Props = {
   Icon: LucideIcon;
   sortBy: string;
+  customLabel?: string;
 };
 
 const SORT_BUTTON_CLASSES =
@@ -19,7 +20,11 @@ const ON_BUTTON_HOVER = {
   transition: { duration: 0.1 },
 };
 
-export default function SortGamesBtn({ Icon, sortBy }: Props) {
+export default function SortGamesBtn({
+  Icon,
+  sortBy,
+  customLabel = undefined,
+}: Props) {
   const sorting = useSortingStore((state) => state.sortBy);
   const currentSortOption = sorting.find((option) => option.id === sortBy);
   let isDesc;
@@ -44,7 +49,8 @@ export default function SortGamesBtn({ Icon, sortBy }: Props) {
         className={`flex gap-1 items-center text-[10px] ${currentSortOption ? "text-primary" : "text-onSurfaceLow"} font-bold tracking-wider`}
       >
         <Icon size={11} />
-        {sortBy.toUpperCase()}
+        {customLabel && customLabel.toUpperCase()}
+        {!customLabel && sortBy.toUpperCase()}
       </p>
       <div className="grid grid-cols-2 gap-2">
         <motion.button

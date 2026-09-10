@@ -28,7 +28,11 @@ export default function SortGames({
         </p>
         <hr className="border-onSurfaceLow opacity-20" />
         <SortGamesBtn Icon={FileChartColumnIncreasing} sortBy="accuracy" />
-        <SortGamesBtn Icon={TrendingUp} sortBy="rating" />
+        <SortGamesBtn
+          Icon={TrendingUp}
+          sortBy="playerRating"
+          customLabel="rating"
+        />
         <SortGamesBtn Icon={ListOrdered} sortBy="moves" />
       </motion.div>
     </>

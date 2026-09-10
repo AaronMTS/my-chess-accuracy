@@ -1,4 +1,16 @@
-export default function GameAccuracy({ accuracy }: { accuracy: number }) {
+export default function GameAccuracy({
+  accuracy,
+  isHighlight = false,
+}: {
+  accuracy: number;
+  isHighlight?: boolean;
+}) {
+  let containerStyling: string = "text-sm";
+
+  if (isHighlight) {
+    containerStyling = "aspect-square content-center";
+  }
+
   let additionalClasses: string;
 
   if (accuracy >= 90) {
@@ -14,7 +26,7 @@ export default function GameAccuracy({ accuracy }: { accuracy: number }) {
 
   return (
     <div
-      className={`w-fit p-1 font-heading ${additionalClasses} text-sm font-semibold rounded-lg tabular-nums tracking-tighter`}
+      className={`w-fit p-1 font-heading ${additionalClasses} ${containerStyling} font-semibold rounded-lg tabular-nums tracking-tighter`}
     >
       {accuracy.toFixed(1)}%
     </div>

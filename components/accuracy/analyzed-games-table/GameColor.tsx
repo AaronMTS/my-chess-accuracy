@@ -3,15 +3,27 @@ const COLOR_CLASSES: { white: string; black: string } = {
   black: "bg-black border-onSurface/40",
 };
 
-export default function GameColor({ color }: { color: "white" | "black" }) {
+export default function GameColor({
+  color,
+  isHighlight = false,
+}: {
+  color: "white" | "black";
+  isHighlight?: boolean;
+}) {
+  let indicatorSizeClass = "size-2.5";
+  let labelClasses = "text-[10px] text-onSurfaceLow uppercase";
+
+  if (isHighlight) {
+    indicatorSizeClass = "size-3";
+    labelClasses = "text-sm text-onSurface capitalize";
+  }
+
   return (
-    <div className="flex gap-1 items-center">
+    <span className="flex gap-1 items-center">
       <span
-        className={`shrink-0 inline-block size-2.5 border ${COLOR_CLASSES[color]} rounded-full`}
+        className={`shrink-0 inline-block ${indicatorSizeClass} border ${COLOR_CLASSES[color]} rounded-full`}
       ></span>
-      <span className="text-onSurfaceLow text-[10px] font-bold uppercase tracking-wide">
-        {color}
-      </span>
-    </div>
+      <span className={`${labelClasses} font-bold tracking-wide`}>{color}</span>
+    </span>
   );
 }

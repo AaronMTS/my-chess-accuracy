@@ -1,5 +1,10 @@
 import { useSortingStore } from "@/store/table-sort";
 import { X } from "lucide-react";
+import { Games } from "@/types/games";
+
+const CUSTOM_LABEL: Partial<Record<keyof Games, string>> = {
+  playerRating: "rating",
+};
 
 export default function ActiveSortIndicator({
   sortId,
@@ -12,7 +17,10 @@ export default function ActiveSortIndicator({
 
   return (
     <span className="flex gap-2 items-center p-2 text-[10px] font-heading text-primary font-medium text-nowrap tracking-wider bg-primary/10 border border-primary/20 rounded-md">
-      {sortId.toUpperCase()}: {sortOrder}
+      {Object.hasOwn(CUSTOM_LABEL, sortId)
+        ? CUSTOM_LABEL[sortId as keyof Games]!.toUpperCase()
+        : sortId.toUpperCase()}
+      : {sortOrder}
       <button className="cursor-pointer" onClick={() => removeSorting()}>
         <X size={13} />
       </button>
